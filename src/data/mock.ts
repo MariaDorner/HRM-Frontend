@@ -8,6 +8,8 @@ export function mockUsers(length: number) {
     const name = faker.name.findName(firstName, lastName, gender);
     const avatar = faker.image.avatar();
 
+    //const department = faker.department.department();
+
     const city = faker.address.city();
     const street = faker.address.street();
     const email = faker.internet.email();
