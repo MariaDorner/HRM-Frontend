@@ -22,7 +22,7 @@ const App = () => {
       <CustomProvider locale={enGB}>
         <Routes>
           <Route path="/" element={<Frame navs={appNavs} />}>
-            <Route path="table-members" element={<MembersPage />} />
+            <Route path="employees" element={<MembersPage />} />
             <Route path="table-virtualized" element={<VirtualizedTablePage />} />
             <Route path="error-404" element={<Error404Page />} />
             <Route path="error-403" element={<Error403Page />} />
