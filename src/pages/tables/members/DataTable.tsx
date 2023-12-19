@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, InputGroup, Table, Button, DOMHelper, Stack } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import MoreIcon from '@rsuite/icons/legacy/More';
@@ -16,7 +16,22 @@ const DataTable = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [tableData, setTableData] = useState([]);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/users');
+      const data = await response.json();
+      setTableData(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  console.log(tableData);
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
     setSortType(sortType);
