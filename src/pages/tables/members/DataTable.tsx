@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Input, InputGroup, Table, Button, DOMHelper, Stack } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
-import MoreIcon from '@rsuite/icons/legacy/More';
 import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
-import { NameCell, ImageCell, ActionCell } from './Cells';
+import { NameCell } from './Cells';
 
 const data = mockUsers(20);
 
@@ -16,6 +15,7 @@ const DataTable = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
@@ -24,11 +24,7 @@ const DataTable = () => {
 
   const filteredData = () => {
     const filtered = data.filter(item => {
-      if (!item.name.includes(searchKeyword)) {
-        return false;
-      }
-
-      return true;
+      return item.name.toLowerCase().includes(searchKeyword.toLowerCase());
     });
 
     if (sortColumn && sortType) {
@@ -51,6 +47,12 @@ const DataTable = () => {
       });
     }
     return filtered;
+  };
+
+  const handleShowProfile = employee => {
+    // Set the selected employee and open the DrawerView
+    setSelectedEmployee(employee);
+    setShowDrawer(true);
   };
 
   return (
@@ -77,40 +79,23 @@ const DataTable = () => {
         sortType={sortType}
         onSortColumn={handleSortColumn}
       >
-        <Column width={50} align="center" fixed>
-          <HeaderCell>Id</HeaderCell>
-          <Cell dataKey="id" />
-        </Column>
-
-        <Column width={80} align="center">
-          <HeaderCell>Avatar</HeaderCell>
-          <ImageCell dataKey="avatar" />
-        </Column>
+        {/* ... (other columns) */}
 
         <Column minWidth={160} flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
-          <NameCell dataKey="name" />
+          <NameCell dataKey="name" showProfile={handleShowProfile} rowData={undefined} />
         </Column>
 
-        <Column minWidth={160} flexGrow={1} sortable>
-          <HeaderCell>Department</HeaderCell>
-          <NameCell dataKey="department" />
-        </Column>
-
-        <Column width={300}>
-          <HeaderCell>Email</HeaderCell>
-          <Cell dataKey="email" />
-        </Column>
-
-        <Column width={120}>
-          <HeaderCell>
-            <MoreIcon />
-          </HeaderCell>
-          <ActionCell dataKey="id" />
-        </Column>
+        {/* ... (other columns) */}
       </Table>
 
-      <DrawerView open={showDrawer} onClose={() => setShowDrawer(false)} />
+      {selectedEmployee && (
+        <DrawerView
+          open={showDrawer}
+          onClose={() => setShowDrawer(false)}
+          // employee={selectedEmployee}
+        />
+      )}
     </>
   );
 };

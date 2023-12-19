@@ -9,7 +9,6 @@ import Error404Page from './pages/authentication/404';
 import Error403Page from './pages/authentication/403';
 import Error500Page from './pages/authentication/500';
 import Error503Page from './pages/authentication/503';
-
 import SignInPage from './pages/authentication/sign-in';
 import SignUpPage from './pages/authentication/sign-up';
 import MembersPage from './pages/tables/members';
@@ -23,6 +22,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Frame navs={appNavs} />}>
             <Route path="employees" element={<MembersPage />} />
+
             <Route path="table-virtualized" element={<VirtualizedTablePage />} />
             <Route path="error-404" element={<Error404Page />} />
             <Route path="error-403" element={<Error403Page />} />
