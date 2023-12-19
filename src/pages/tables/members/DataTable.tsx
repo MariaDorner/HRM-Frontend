@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Input, InputGroup, Table, Button, DOMHelper, Stack } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
+import MoreIcon from '@rsuite/icons/legacy/More';
 import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
-import { NameCell } from './Cells';
+import { NameCell, ImageCell, ActionCell } from './Cells';
 
 const data = mockUsers(20);
 
@@ -15,7 +16,6 @@ const DataTable = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
@@ -49,12 +49,6 @@ const DataTable = () => {
     return filtered;
   };
 
-  const handleShowProfile = employee => {
-    // Set the selected employee and open the DrawerView
-    setSelectedEmployee(employee);
-    setShowDrawer(true);
-  };
-
   return (
     <>
       <Stack className="table-toolbar" justifyContent="space-between">
@@ -79,23 +73,40 @@ const DataTable = () => {
         sortType={sortType}
         onSortColumn={handleSortColumn}
       >
-        {/* ... (other columns) */}
+        <Column width={50} align="center" fixed>
+          <HeaderCell>Id</HeaderCell>
+          <Cell dataKey="id" />
+        </Column>
+
+        <Column width={80} align="center">
+          <HeaderCell>Avatar</HeaderCell>
+          <ImageCell dataKey="avatar" />
+        </Column>
 
         <Column minWidth={160} flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
-          <NameCell dataKey="name" showProfile={handleShowProfile} rowData={undefined} />
+          <NameCell dataKey="name" />
         </Column>
 
-        {/* ... (other columns) */}
+        <Column minWidth={160} flexGrow={1} sortable>
+          <HeaderCell>Department</HeaderCell>
+          <Cell dataKey="department" />
+        </Column>
+
+        <Column width={300}>
+          <HeaderCell>Email</HeaderCell>
+          <Cell dataKey="email" />
+        </Column>
+
+        <Column width={120}>
+          <HeaderCell>
+            <MoreIcon />
+          </HeaderCell>
+          <ActionCell dataKey="id" />
+        </Column>
       </Table>
 
-      {selectedEmployee && (
-        <DrawerView
-          open={showDrawer}
-          onClose={() => setShowDrawer(false)}
-          // employee={selectedEmployee}
-        />
-      )}
+      <DrawerView open={showDrawer} onClose={() => setShowDrawer(false)} />
     </>
   );
 };

@@ -1,15 +1,58 @@
 import React from 'react';
-import { Button } from 'rsuite';
+import { Popover, Whisper, IconButton, Table, CellProps } from 'rsuite';
+import MoreIcon from '@rsuite/icons/legacy/More';
 
-export const NameCell = ({ rowData, dataKey, ...props }) => {
-  const handleClick = () => {
-    // Pass the employee data to the function that handles showing the profile
-    props.showProfile(rowData);
-  };
+const { Cell } = Table;
+
+export const NameCell = ({ rowData, dataKey, ...props }: CellProps) => {
+  const speaker = (
+    <Popover title="Description">
+      <p>
+        <b>Name:</b> {rowData.name}
+      </p>
+      <p>
+        <b>Gender:</b> {rowData.gender}
+      </p>
+      <p>
+        <b>City:</b> {rowData.city}
+      </p>
+      <p>
+        <b>Street:</b> {rowData.street}
+      </p>
+    </Popover>
+  );
 
   return (
-    <Button appearance="link" onClick={handleClick}>
-      {rowData[dataKey]}
-    </Button>
+    <Cell {...props}>
+      <Whisper placement="top" speaker={speaker}>
+        <a>{dataKey ? rowData[dataKey] : null}</a>
+      </Whisper>
+    </Cell>
+  );
+};
+
+export const ImageCell = ({ rowData, dataKey, ...props }: CellProps) => (
+  <Cell {...props} style={{ padding: 0 }}>
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        background: '#f5f5f5',
+        borderRadius: 6,
+        marginTop: 2,
+        overflow: 'hidden',
+        display: 'inline-block'
+      }}
+    >
+      <img src={rowData[dataKey!]} width="40" />
+    </div>
+  </Cell>
+);
+
+export const ActionCell = props => {
+  return (
+    <Cell {...props} className="link-group">
+      <IconButton appearance="subtle" icon={<MoreIcon />} />
+    </Cell>
   );
 };
