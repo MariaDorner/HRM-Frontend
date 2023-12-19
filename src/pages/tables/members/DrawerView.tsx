@@ -4,28 +4,49 @@ import axios from 'axios';
 
 const DrawerView = (props: DrawerProps) => {
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    phone1: '',
-    phone2: '',
-    email: '',
-    jobname: '',
-    department: '',
-    managerName: '',
-    skillsname: '',
-    description: '',
-    educ: '',
-    dura: '',
-    desc: ''
+    user: {
+      firstname: '',
+      lastname: '',
+      birthdata: null,
+      phone1: '',
+      phone2: '',
+      email: '',
+      description: '',
+      status: false
+    },
+    department: {
+      title: '',
+      status: false
+    },
+    work: {
+      title: '',
+      manager_name: '',
+      start_date: null,
+      description: '',
+      is_current: false
+    },
+    skill: {
+      name: '',
+      description: ''
+    },
+    education: {
+      name: '',
+      duration: '',
+      description: ''
+    }
   });
+
   const { onClose, ...rest } = props;
-  const handleFormChange = (value: any, name: string) => {
+
+  const handleFormChange = (value: any, name: string, category: string) => {
     setFormData(prevData => ({
       ...prevData,
-      [name]: value
+      [category]: {
+        ...prevData[category],
+        [name]: value
+      }
     }));
   };
-
   const handleSubmit = () => {
     // Make an API call using Axios
     axios
@@ -62,7 +83,7 @@ const DrawerView = (props: DrawerProps) => {
               <Form.Control
                 name="firstname"
                 style={{ width: 200 }}
-                onChange={value => handleFormChange(value, 'firstname')}
+                onChange={value => handleFormChange(value, 'firstname', 'user')}
               />
             </Form.Group>
             <Form.Group>
@@ -70,7 +91,7 @@ const DrawerView = (props: DrawerProps) => {
               <Form.Control
                 name="lastname"
                 style={{ width: 200 }}
-                onChange={value => handleFormChange(value, 'lastname')}
+                onChange={value => handleFormChange(value, 'lastname', 'user')}
               />
             </Form.Group>
           </Stack>
