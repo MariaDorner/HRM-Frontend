@@ -4,28 +4,28 @@ import MoreIcon from '@rsuite/icons/legacy/More';
 
 const { Cell } = Table;
 
-export const NameCell = ({ rowData, dataKey, ...props }: CellProps) => {
+interface NameCellProps extends CellProps {
+  dataKey: string; // Add dataKey prop
+  onNameClick: (rowData: any) => void; // Add onNameClick prop
+}
+
+export const NameCell: React.FC<NameCellProps> = ({ rowData, dataKey, onNameClick, ...props }) => {
   const speaker = (
     <Popover title="Description">
       <p>
         <b>Name:</b> {rowData.name}
       </p>
-      <p>
-        <b>Gender:</b> {rowData.gender}
-      </p>
-      <p>
-        <b>City:</b> {rowData.city}
-      </p>
-      <p>
-        <b>Street:</b> {rowData.street}
-      </p>
     </Popover>
   );
+
+  const handleClick = () => {
+    onNameClick(rowData); // Call the provided onNameClick callback
+  };
 
   return (
     <Cell {...props}>
       <Whisper placement="top" speaker={speaker}>
-        <a>{dataKey ? rowData[dataKey] : null}</a>
+        <a onClick={handleClick}>{dataKey ? rowData[dataKey] : null}</a>
       </Whisper>
     </Cell>
   );
@@ -35,7 +35,7 @@ export const ImageCell = ({ rowData, dataKey, ...props }: CellProps) => (
   <Cell {...props} style={{ padding: 0 }}>
     <div
       style={{
-        width: 40,
+        width: 0,
         height: 40,
         background: '#f5f5f5',
         borderRadius: 6,

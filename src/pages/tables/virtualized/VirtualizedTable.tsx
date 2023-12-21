@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { DOMHelper, Table } from 'rsuite';
 import { mockUsers } from '@/data/mock';
 
@@ -54,3 +54,4 @@ const VirtualizedTable = () => {
 };
 
 export default VirtualizedTable;
+'*/

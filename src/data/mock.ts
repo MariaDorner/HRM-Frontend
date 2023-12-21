@@ -1,18 +1,29 @@
 import { faker } from '@faker-js/faker/locale/en';
 
 export function mockUsers(length: number) {
-  const createRowData = rowIndex => {
+  const createRowData = (rowIndex: number) => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
     const name = faker.name.findName(firstName, lastName);
     const avatar = faker.image.avatar();
-
-    //const department = faker.department.department();
-
     const address = faker.address.city();
     const email = faker.internet.email();
     const phone1 = faker.phone.number();
     const phone2 = faker.phone.number();
+
+    const jobTitle = faker.name.jobTitle();
+    const departments = ['IT', 'HR', 'Marketing', 'Finance', 'Sales', 'Customer Support'];
+    const department = faker.datatype.number({ min: 0, max: departments.length - 1 });
+    const selectedDepartment = departments[department];
+
+    const workDescription = faker.lorem.sentence();
+    const managerName = faker.name.findName();
+    const startDate = faker.date.past().toLocaleDateString();
+    const skillName = faker.random.word();
+    const skillDescription = faker.lorem.words(5);
+    const educationName = faker.random.word();
+    const educationDuration = faker.datatype.number({ min: 2, max: 6 }) + ' years';
+    const educationsDescription = faker.lorem.words(10);
 
     return {
       id: rowIndex + 1,
@@ -23,17 +34,17 @@ export function mockUsers(length: number) {
       address,
       email,
       phone1,
-      phone2
-      //jobTitle,
-      //department,
-      //workDescription,
-      //managerName,
-      //startDate,
-      //skillName,
-      //skillDescription,
-      //educationName,
-      //duration,
-      //educationsDescription
+      phone2,
+      jobTitle,
+      department: selectedDepartment,
+      workDescription,
+      managerName,
+      startDate,
+      skillName,
+      skillDescription,
+      educationName,
+      educationDuration,
+      educationsDescription
     };
   };
 

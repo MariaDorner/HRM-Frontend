@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Input, InputGroup, Table, Button, DOMHelper, Stack } from 'rsuite';
+import { Input, InputGroup, Table, Button, DOMHelper, Stack, Modal } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import MoreIcon from '@rsuite/icons/legacy/More';
 import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
-import { NameCell, ImageCell, ActionCell } from './Cells';
+import { ImageCell, ActionCell, NameCell } from './Cells';
+import Profile from './Profile';
 
 const data = mockUsers(20);
 
@@ -16,10 +17,28 @@ const DataTable = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [selectedEmployee, setSelectedEmployeeId] = useState<any | null>(null); // Updated state
+  const [isEditing, setIsEditing] = useState(false); // Added state for editing mode
+  const [openModal, setOpenModal] = useState(false);
 
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
     setSortType(sortType);
+  };
+
+  const handleNameClick = (rowData: any) => {
+    setSelectedEmployeeId(rowData.id);
+    setIsEditing(false); // Set to false when opening the modal to view details
+    setOpenModal(true);
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setIsEditing(false); // Reset editing mode when closing the modal
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setOpenModal(true);
   };
 
   const filteredData = () => {
@@ -80,12 +99,12 @@ const DataTable = () => {
 
         <Column width={80} align="center">
           <HeaderCell>Avatar</HeaderCell>
-          <ImageCell dataKey="avatar" />
+          <ImageCell rowData={data} dataKey="avatar" />
         </Column>
 
         <Column minWidth={160} flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
-          <NameCell dataKey="name" />
+          <NameCell dataKey="name" onNameClick={x => handleNameClick(x)} />
         </Column>
 
         <Column minWidth={160} flexGrow={1} sortable>
@@ -102,9 +121,22 @@ const DataTable = () => {
           <HeaderCell>
             <MoreIcon />
           </HeaderCell>
-          <ActionCell dataKey="id" />
+          <ActionCell dataKey="id" onEditClick={() => handleEditClick()} />
         </Column>
       </Table>
+
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <Modal.Body>
+          {selectedEmployee && (
+            <Profile employeeId={selectedEmployee} isEditingProp={isEditing} employees={data} />
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleCloseModal} appearance="primary">
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <DrawerView open={showDrawer} onClose={() => setShowDrawer(false)} />
     </>
