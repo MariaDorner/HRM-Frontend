@@ -8,7 +8,7 @@ import { ImageCell, ActionCell, NameCell } from './Cells';
 import Profile from './Profile';
 
 const data = mockUsers(20);
-
+console.log(data);
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
 
