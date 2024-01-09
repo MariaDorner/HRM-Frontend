@@ -1,7 +1,6 @@
 import React from 'react';
 import { Popover, Whisper, IconButton, Table, CellProps } from 'rsuite';
-import MoreIcon from '@rsuite/icons/legacy/More';
-
+import TrashIcon from '@rsuite/icons/Trash';
 const { Cell } = Table;
 
 interface NameCellProps extends CellProps {
@@ -52,7 +51,7 @@ export const ImageCell = ({ rowData, dataKey, ...props }: CellProps) => (
 export const ActionCell = props => {
   return (
     <Cell {...props} className="link-group">
-      <IconButton appearance="subtle" icon={<MoreIcon />} />
+      <IconButton appearance="subtle" icon={<TrashIcon />} />
     </Cell>
   );
 };

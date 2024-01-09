@@ -6,6 +6,7 @@ import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
 import { ImageCell, ActionCell, NameCell } from './Cells';
 import Profile from './Profile';
+import './DataTable.css';
 
 const data = mockUsers(20);
 
@@ -126,7 +127,7 @@ const DataTable = () => {
       </Table>
 
       <Modal open={openModal} onClose={handleCloseModal}>
-        <Modal.Body>
+        <Modal.Body className="">
           {selectedEmployee && (
             <Profile employeeId={selectedEmployee} isEditingProp={isEditing} employees={data} />
           )}
