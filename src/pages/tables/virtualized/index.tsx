@@ -1,5 +1,5 @@
 import React from 'react';
-import VirtualizedTable from './VirtualizedTable';
+//import VirtualizedTable from './VirtualizedTable'; <VirtualizedTable />
 
 import { Breadcrumb, Panel } from 'rsuite';
 
@@ -16,9 +16,7 @@ const Page = () => {
           </Breadcrumb>
         </>
       }
-    >
-      <VirtualizedTable />
-    </Panel>
+    ></Panel>
   );
 };
 
