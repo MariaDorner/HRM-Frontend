@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, InputGroup, Table, Button, DOMHelper, Stack, Modal } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import MoreIcon from '@rsuite/icons/legacy/More';
@@ -9,7 +9,7 @@ import Profile from './Profile';
 import './DataTable.css';
 
 const data = mockUsers(20);
-console.log(data);
+
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
 
@@ -21,6 +21,24 @@ const DataTable = () => {
   const [selectedEmployee, setSelectedEmployeeId] = useState<any | null>(null); // Updated state
   const [isEditing, setIsEditing] = useState(false); // Added state for editing mode
   const [openModal, setOpenModal] = useState(false);
+  const [tableData, setTableData] = useState();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/users');
+
+      const data = await response.json();
+      console.log(data);
+      setTableData(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  const userData = tableData?.data?.users;
 
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
@@ -43,8 +61,11 @@ const DataTable = () => {
   };
 
   const filteredData = () => {
-    const filtered = data.filter(item => {
-      return item.name.toLowerCase().includes(searchKeyword.toLowerCase());
+    if (!userData) {
+      return [];
+    }
+    const filtered = userData.filter(item => {
+      return item.firstname.toLowerCase().includes(searchKeyword.toLowerCase());
     });
 
     if (sortColumn && sortType) {
@@ -105,7 +126,7 @@ const DataTable = () => {
 
         <Column minWidth={160} flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
-          <NameCell dataKey="name" onNameClick={x => handleNameClick(x)} />
+          <NameCell dataKey="firstname" onNameClick={x => handleNameClick(x)} />
         </Column>
 
         <Column minWidth={160} flexGrow={1} sortable>
