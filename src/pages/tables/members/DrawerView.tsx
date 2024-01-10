@@ -101,7 +101,7 @@ const DrawerView = (props: DrawerProps) => {
               <Form.Control
                 name="phone1"
                 style={{ width: 200 }}
-                onChange={value => handleFormChange(value, 'phone1')}
+                onChange={value => handleFormChange(value, 'phone1', 'user')}
               />
             </Form.Group>
             <Form.Group>
@@ -109,7 +109,7 @@ const DrawerView = (props: DrawerProps) => {
               <Form.Control
                 name="phone2"
                 style={{ width: 200 }}
-                onChange={value => handleFormChange(value, 'phone2')}
+                onChange={value => handleFormChange(value, 'phone2', 'user')}
               />
             </Form.Group>
           </Stack>
@@ -124,7 +124,7 @@ const DrawerView = (props: DrawerProps) => {
                 name="email"
                 type="email"
                 style={{ width: 200 }}
-                onChange={value => handleFormChange(value, 'email')}
+                onChange={value => handleFormChange(value, 'email', 'user')}
               />
             </Form.Group>
           </Stack>
@@ -132,13 +132,16 @@ const DrawerView = (props: DrawerProps) => {
           <h4 style={{ marginBottom: 20 }}>Work information</h4>
           <Form.Group>
             <Form.ControlLabel>Job title</Form.ControlLabel>
-            <Form.Control name="jobname" onChange={value => handleFormChange(value, 'jobname')} />
+            <Form.Control
+              name="jobname"
+              onChange={value => handleFormChange(value, 'title', 'work')}
+            />
           </Form.Group>
           <Form.Group>
             <Form.ControlLabel>Department</Form.ControlLabel>
             <Form.Control
               name="department"
-              onChange={value => handleFormChange(value, 'department')}
+              onChange={value => handleFormChange(value, 'title', 'department')}
             />
           </Form.Group>
           <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
@@ -147,7 +150,7 @@ const DrawerView = (props: DrawerProps) => {
               <Form.Control
                 name="managerName"
                 style={{ width: 200 }}
-                onChange={value => handleFormChange(value, 'managerName')}
+                onChange={value => handleFormChange(value, 'manager_name', 'work')}
               />
             </Form.Group>
             <Form.Group>
@@ -165,7 +168,7 @@ const DrawerView = (props: DrawerProps) => {
             <Form.ControlLabel>Skill's name</Form.ControlLabel>
             <Form.Control
               name="skillsname"
-              onChange={value => handleFormChange(value, 'skillsname')}
+              onChange={value => handleFormChange(value, 'skill', 'skill')}
             />
           </Form.Group>
           <Form.Group>
@@ -175,7 +178,7 @@ const DrawerView = (props: DrawerProps) => {
               as="textarea"
               rows={3}
               placeholder="description"
-              onChange={value => handleFormChange(value, 'description')}
+              onChange={value => handleFormChange(value, 'description', 'skill')}
             />
           </Form.Group>
 
@@ -186,7 +189,7 @@ const DrawerView = (props: DrawerProps) => {
               <Form.Control
                 name="educ"
                 style={{ width: 300 }}
-                onChange={value => handleFormChange(value, 'educ')}
+                onChange={value => handleFormChange(value, 'name', 'education')}
               />
             </Form.Group>
             <Form.Group>
@@ -194,13 +197,16 @@ const DrawerView = (props: DrawerProps) => {
               <Form.Control
                 name="dura"
                 style={{ width: 150 }}
-                onChange={value => handleFormChange(value, 'dura')}
+                onChange={value => handleFormChange(value, 'duration', 'education')}
               />
             </Form.Group>
           </Stack>
           <Form.Group>
             <Form.ControlLabel>Description</Form.ControlLabel>
-            <Form.Control name="desc" onChange={value => handleFormChange(value, 'desc')} />
+            <Form.Control
+              name="desc"
+              onChange={value => handleFormChange(value, 'description', 'education')}
+            />
           </Form.Group>
         </Form>
       </Drawer.Body>

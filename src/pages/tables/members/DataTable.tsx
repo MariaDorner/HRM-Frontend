@@ -16,7 +16,7 @@ const DataTable = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState();
 
   useEffect(() => {
     fetchData();
@@ -31,15 +31,20 @@ const DataTable = () => {
       console.error('Error fetching data:', error);
     }
   };
-  console.log(tableData);
+  const userData = tableData?.data?.users;
+  console.log(userData);
+
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
     setSortType(sortType);
   };
 
   const filteredData = () => {
-    const filtered = data.filter(item => {
-      if (!item.name.includes(searchKeyword)) {
+    if (!userData) {
+      return [];
+    }
+    const filtered = userData.filter(item => {
+      if (!item.firstname.includes(searchKeyword)) {
         return false;
       }
 
@@ -104,7 +109,7 @@ const DataTable = () => {
 
         <Column minWidth={160} flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
-          <NameCell dataKey="name" />
+          <NameCell dataKey="firstname" />
         </Column>
 
         <Column minWidth={160} flexGrow={1} sortable>
