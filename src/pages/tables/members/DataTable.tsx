@@ -9,7 +9,7 @@ import Profile from './Profile';
 import './DataTable.css';
 
 const data = mockUsers(20);
-
+console.log(data);
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
 
