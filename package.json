@@ -50,7 +50,7 @@
     "react-icons": "^4.4.0",
     "react-intl": "^6.0.5",
     "react-router": "6.3.0",
-    "react-router-dom": "^6.21.0",
+    "react-router-dom": "^6.21.1",
     "rsuite": "5.28.2"
   },
   "devDependencies": {

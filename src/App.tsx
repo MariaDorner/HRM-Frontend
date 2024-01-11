@@ -14,6 +14,7 @@ import SignUpPage from './pages/authentication/sign-up';
 import MembersPage from './pages/tables/members';
 import VirtualizedTablePage from './pages/tables/virtualized';
 import { appNavs } from './config';
+import EmployeeProfilePage from './pages/tables/members/EmployeeProfilePage';
 
 const App = () => {
   return (
@@ -24,6 +25,8 @@ const App = () => {
             <Route path="employees" element={<MembersPage />} />
 
             <Route path="table-virtualized" element={<VirtualizedTablePage />} />
+            <Route path="employee-profile/:id" element={<EmployeeProfilePage />} />
+
             <Route path="error-404" element={<Error404Page />} />
             <Route path="error-403" element={<Error403Page />} />
             <Route path="error-500" element={<Error500Page />} />

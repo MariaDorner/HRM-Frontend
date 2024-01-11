@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { Input, InputGroup, Table, Button, DOMHelper, Stack, Modal } from 'rsuite';
+import { Input, InputGroup, Table, Button, DOMHelper, Stack } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import MoreIcon from '@rsuite/icons/legacy/More';
 import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
 import { ImageCell, ActionCell, NameCell } from './Cells';
-import Profile from './Profile';
+import { useNavigate } from 'react-router-dom';
+import EmployeeProfilePage from './EmployeeProfilePage';
+
 import './DataTable.css';
 
 const data = mockUsers(20);
+const navigate = useNavigate();
+
 console.log(data);
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
@@ -18,28 +22,18 @@ const DataTable = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [selectedEmployee, setSelectedEmployeeId] = useState<any | null>(null); // Updated state
-  const [isEditing, setIsEditing] = useState(false); // Added state for editing mode
-  const [openModal, setOpenModal] = useState(false);
+  //const [selectedEmployee, setSelectedEmployeeId] = useState<any | null>(null); // Updated state
+  //const [isEditing, setIsEditing] = useState(false); // Added state for editing mode
+  const handleNameClick = (rowData: any) => {
+    setSelectedEmployeeId(rowData.id);
+    setIsEditing(false); // Set to false when opening the modal to view details
+    // Navigate to the EmployeeProfilePage
+    navigate(`/employee-profile/${rowData.id}`);
+  };
 
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
     setSortType(sortType);
-  };
-
-  const handleNameClick = (rowData: any) => {
-    setSelectedEmployeeId(rowData.id);
-    setIsEditing(false); // Set to false when opening the modal to view details
-    setOpenModal(true);
-  };
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setIsEditing(false); // Reset editing mode when closing the modal
-  };
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setOpenModal(true);
   };
 
   const filteredData = () => {
@@ -126,22 +120,16 @@ const DataTable = () => {
         </Column>
       </Table>
 
-      <Modal open={openModal} onClose={handleCloseModal}>
-        <Modal.Body className="">
-          {selectedEmployee && (
-            <Profile employeeId={selectedEmployee} isEditingProp={isEditing} employees={data} />
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleCloseModal} appearance="primary">
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
       <DrawerView open={showDrawer} onClose={() => setShowDrawer(false)} />
     </>
   );
 };
 
 export default DataTable;
+function setSelectedEmployeeId(id: any) {
+  throw new Error('Function not implemented.');
+}
+
+function setIsEditing(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
