@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Input, InputGroup, Table, Button, DOMHelper, Stack, Modal } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
-import MoreIcon from '@rsuite/icons/legacy/More';
+
 import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
-import { ImageCell, ActionCell, NameCell } from './Cells';
+import ActionCell, { ImageCell, NameCell } from './Cells';
 import Profile from './Profile';
 import './DataTable.css';
 
@@ -37,7 +37,8 @@ const DataTable = () => {
     setIsEditing(false); // Reset editing mode when closing the modal
   };
 
-  const handleEditClick = () => {
+  const handleEditClick = (rowData: any) => {
+    setSelectedEmployeeId(rowData.id);
     setIsEditing(true);
     setOpenModal(true);
   };
@@ -93,7 +94,12 @@ const DataTable = () => {
         sortType={sortType}
         onSortColumn={handleSortColumn}
       >
-        <Column width={50} align="center" fixed>
+        <Column width={90} align="center">
+          <HeaderCell> </HeaderCell>
+          <Cell dataKey="edit" />
+        </Column>
+
+        <Column width={50} align="center">
           <HeaderCell>Id</HeaderCell>
           <Cell dataKey="id" />
         </Column>
@@ -119,10 +125,8 @@ const DataTable = () => {
         </Column>
 
         <Column width={120}>
-          <HeaderCell>
-            <MoreIcon />
-          </HeaderCell>
-          <ActionCell dataKey="id" onEditClick={() => handleEditClick()} />
+          <HeaderCell>...</HeaderCell>
+          <ActionCell rowData={data} onEditClick={x => handleEditClick(x)} />
         </Column>
       </Table>
 
