@@ -40,3 +40,28 @@
     transform: translateY(0);
   }
 }
+
+/* Add this to your CSS file */
+.toggle-label {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc; /* Default background color */
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.toggle-label.active {
+  background-color: #e9ffdb; /* Background color when active */
+}
+
+.toggle-label.inactive {
+  background-color: #ffe4e1; /* Background color when inactive */
+}
+
+.rs-toggle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

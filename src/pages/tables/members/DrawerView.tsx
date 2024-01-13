@@ -1,8 +1,34 @@
 import React from 'react';
-import { Drawer, DrawerProps, Button, Form, Stack, DatePicker, Input, Toggle } from 'rsuite';
+import {
+  Drawer,
+  DrawerProps,
+  Button,
+  Form,
+  Stack,
+  DatePicker,
+  Input,
+  Toggle,
+  Uploader,
+  Message,
+  Loader,
+  useToaster
+} from 'rsuite';
+import AvatarIcon from '@rsuite/icons/legacy/Avatar';
+
+function previewFile(file, callback) {
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    callback(reader.result);
+  };
+  reader.readAsDataURL(file);
+}
 
 const DrawerView = (props: DrawerProps) => {
   const { onClose, ...rest } = props;
+  const toaster = useToaster();
+  const [uploading, setUploading] = React.useState(false);
+  const [fileInfo, setFileInfo] = React.useState(null);
+
   return (
     <Drawer backdrop="static" size="sm" placement="right" onClose={onClose} {...rest}>
       <Drawer.Header>
@@ -21,15 +47,53 @@ const DrawerView = (props: DrawerProps) => {
         <Form fluid>
           <h4 style={{ marginBottom: 20 }}>Personal information</h4>
           <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
-            <Form.Group>
-              <Form.ControlLabel>First Name</Form.ControlLabel>
-              <Form.Control name="firstname" style={{ width: 200 }} />
-            </Form.Group>
-            <Form.Group>
-              <Form.ControlLabel>Last Name</Form.ControlLabel>
-              <Form.Control name="lastname" style={{ width: 200 }} />
-            </Form.Group>
+            <Form layout="inline">
+              <Form.Group>
+                <Form.ControlLabel>Image</Form.ControlLabel>
+                <Uploader
+                  fileListVisible={false}
+                  listType="picture"
+                  action="//jsonplaceholder.typicode.com/posts/"
+                  onUpload={file => {
+                    setUploading(true);
+                    previewFile(file.blobFile, value => {
+                      setFileInfo(value);
+                    });
+                  }}
+                  onSuccess={(response, file) => {
+                    setUploading(false);
+                    toaster.push(<Message type="success">Uploaded successfully</Message>);
+                    console.log(response);
+                  }}
+                  onError={() => {
+                    setFileInfo(null);
+                    setUploading(false);
+                    toaster.push(<Message type="error">Upload failed</Message>);
+                  }}
+                >
+                  <button style={{ width: 150, height: 165 }}>
+                    {uploading && <Loader backdrop center />}
+                    {fileInfo ? (
+                      <img src={fileInfo} width="100%" height="100%" />
+                    ) : (
+                      <AvatarIcon style={{ fontSize: 80 }} />
+                    )}
+                  </button>
+                </Uploader>
+              </Form.Group>
+              <Form.Group style={{ marginLeft: 20, marginRight: 20 }}>
+                <Form.ControlLabel>First Name</Form.ControlLabel>
+                <Form.Control name="firstname" style={{ width: 200, marginTop: 5 }} />
+
+                <Form.ControlLabel>Last Name</Form.ControlLabel>
+                <Form.Control name="lastname" style={{ width: 200, marginTop: 5 }} />
+
+                <Form.ControlLabel>Email</Form.ControlLabel>
+                <Form.Control name="email" type="email" style={{ width: 200, marginTop: 5 }} />
+              </Form.Group>
+            </Form>
           </Stack>
+
           <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
             <Form.Group>
               <Form.ControlLabel>Phone 1</Form.ControlLabel>
@@ -46,8 +110,8 @@ const DrawerView = (props: DrawerProps) => {
               <DatePicker showWeekNumbers style={{ width: 200 }} />
             </Form.Group>
             <Form.Group>
-              <Form.ControlLabel>Email</Form.ControlLabel>
-              <Form.Control name="email" type="email" style={{ width: 200 }} />
+              <Form.ControlLabel>Address</Form.ControlLabel>
+              <Form.Control name="address" style={{ width: 200 }} />
             </Form.Group>
           </Stack>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, InputGroup, Table, Button, DOMHelper, Stack, Modal } from 'rsuite';
+import { Input, InputGroup, Table, Button, DOMHelper, Stack, Modal, Toggle } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 
 import DrawerView from './DrawerView';
@@ -8,7 +8,10 @@ import ActionCell, { ImageCell, NameCell } from './Cells';
 import Profile from './Profile';
 import './DataTable.css';
 
-const data = mockUsers(20);
+const data = mockUsers(20).map(user => ({
+  ...user,
+  isActive: Math.random() < 0.5 // Example: randomly assign active status
+}));
 
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
@@ -21,6 +24,23 @@ const DataTable = () => {
   const [selectedEmployee, setSelectedEmployeeId] = useState<any | null>(null); // Updated state
   const [isEditing, setIsEditing] = useState(false); // Added state for editing mode
   const [openModal, setOpenModal] = useState(false);
+
+  const CustomToggle = ({ checked, onChange }) => (
+    <label className={`toggle-label ${checked ? 'active' : 'inactive'}`}>
+      <Toggle checked={checked} onChange={onChange} />
+    </label>
+  );
+
+  const ActiveIndicator = ({ value, rowData, onChange }) => (
+    <div>
+      <CustomToggle checked={value} onChange={v => onChange(v, rowData)} />
+    </div>
+  );
+
+  const handleToggleChange = (value, rowData) => {
+    // Handle the change of the "Active" status here (e.g., update your data or make an API call)
+    console.log(`Employee ${rowData.id} is now ${value ? 'Active' : 'Inactive'}`);
+  };
 
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
@@ -94,9 +114,22 @@ const DataTable = () => {
         sortType={sortType}
         onSortColumn={handleSortColumn}
       >
-        <Column width={90} align="center">
+        <Column width={50} align="center">
           <HeaderCell> </HeaderCell>
           <Cell dataKey="edit" />
+        </Column>
+
+        <Column width={50} align="center">
+          <HeaderCell>Active</HeaderCell>
+          <Cell>
+            {rowData => (
+              <ActiveIndicator
+                value={rowData.isActive}
+                rowData={rowData}
+                onChange={handleToggleChange}
+              />
+            )}
+          </Cell>
         </Column>
 
         <Column width={50} align="center">
