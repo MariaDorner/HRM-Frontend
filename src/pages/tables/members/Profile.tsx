@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Input, Panel, PanelGroup } from 'rsuite';
+import './ProfileModal.css';
 
 interface ProfileProps {
   employeeId: any;
@@ -71,50 +72,70 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
   return (
     <>
       {selectedEmployee && (
-        <>
-          <PanelGroup className="modal">
-            <Panel header={isEditingProp ? 'Edit Profile' : selectedEmployee.name}>
-              <img src={selectedEmployee.avatar} alt={selectedEmployee.firstName} />
-              <hr />
-              <Input
-                placeholder="Name"
-                value={editedFields.name}
-                onChange={value => handleFieldChange('name', value)}
-                disabled={!isEditing}
-              />
-              <Input
-                placeholder="Email"
-                value={editedFields.email}
-                onChange={value => handleFieldChange('email', value)}
-                disabled={!isEditing}
-              />
-              <Input
-                placeholder="Phone 1"
-                value={editedFields.phone1}
-                onChange={value => handleFieldChange('phone1', value)}
-                disabled={!isEditing}
-              />
-              <Input
-                placeholder="Phone 2"
-                value={editedFields.phone2}
-                onChange={value => handleFieldChange('phone2', value)}
-                disabled={!isEditing}
-              />
-              <Input
-                placeholder="Birthday"
-                value={editedFields.Birthday}
-                onChange={value => handleFieldChange('Birthday', value)}
-                disabled={!isEditing}
-              />
-              <Input
-                placeholder="Address"
-                value={editedFields.address}
-                onChange={value => handleFieldChange('address', value)}
-                disabled={!isEditing}
-              />
-            </Panel>{' '}
-            <hr />
-            <Panel header="Work ">
+        <div className="profile-container">
+          <div className="profile-content">
+            <div className="profile-personal-info">
+              <div className="profile-avatar">
+                <img src={selectedEmployee.avatar} alt={selectedEmployee.firstName} />
+              </div>
+              <div className="profile-info">
+                <h4 style={{ fontWeight: 'bold', color: '#333' }}>Personal Information</h4>
+                <Input
+                  placeholder="Name"
+                  value={editedFields.name}
+                  onChange={value => handleFieldChange('name', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333' }}
+                />
+                <Input
+                  placeholder="Email"
+                  value={editedFields.email}
+                  onChange={value => handleFieldChange('email', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333' }}
+                />
+                <Input
+                  placeholder="Phone 1"
+                  value={editedFields.phone1}
+                  onChange={value => handleFieldChange('phone1', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333' }}
+                />
+                <Input
+                  placeholder="Phone 2"
+                  value={editedFields.phone2}
+                  onChange={value => handleFieldChange('phone2', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333' }}
+                />
+                <Input
+                  placeholder="Birthday"
+                  value={editedFields.Birthday}
+                  onChange={value => handleFieldChange('Birthday', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333' }}
+                />
+              </div>
+
+              <div className="profile-actions">
+                <Button
+                  onClick={handleEditClick}
+                  appearance="default"
+                  style={{ marginRight: '20px' }}
+                >
+                  Edit
+                </Button>
+                {isEditing && (
+                  <Button onClick={handleSaveClick} appearance="primary">
+                    Save
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="profile-details">
+            <Panel header="work" bordered>
               <Input
                 placeholder="Job Title"
                 value={editedFields.jobTitle}
@@ -146,7 +167,7 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
                 disabled={!isEditingProp}
               />
             </Panel>
-            <Panel header="Skills ">
+            <Panel header="Skills " bordered>
               <Input
                 placeholder="Skill Name"
                 value={editedFields.skillName}
@@ -160,7 +181,7 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
                 disabled={!isEditing}
               />
             </Panel>
-            <Panel header="Education ">
+            <Panel header="Education " bordered>
               <Input
                 placeholder="Education Name"
                 value={editedFields.educationName}
@@ -179,19 +200,9 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
                 onChange={value => handleFieldChange('educationsDescription', value)}
                 disabled={!isEditing}
               />
-
-              {isEditing ? (
-                <Button onClick={handleSaveClick} appearance="ghost">
-                  Save
-                </Button>
-              ) : (
-                <Button onClick={handleEditClick} appearance="default">
-                  Edit
-                </Button>
-              )}
             </Panel>
-          </PanelGroup>
-        </>
+          </div>
+        </div>
       )}
     </>
   );
