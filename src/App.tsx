@@ -14,6 +14,7 @@ import SignUpPage from './pages/authentication/sign-up';
 import MembersPage from './pages/tables/members';
 import VirtualizedTablePage from './pages/tables/virtualized';
 import { appNavs } from './config';
+import EmployeeDetailsPage from './pages/tables/members/EmployeeDetailsPage';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Frame navs={appNavs} />}>
             <Route path="employees" element={<MembersPage />} />
+            <Route path="employees/:id" element={<EmployeeDetailsPage />} />
 
             <Route path="table-virtualized" element={<VirtualizedTablePage />} />
             <Route path="error-404" element={<Error404Page />} />

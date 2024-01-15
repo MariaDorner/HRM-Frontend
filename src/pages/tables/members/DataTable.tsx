@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Input, InputGroup, Table, Button, DOMHelper, Stack, Modal } from 'rsuite';
+import { useNavigate } from 'react-router-dom';
+
+import { Input, InputGroup, Table, Button, DOMHelper, Stack } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import MoreIcon from '@rsuite/icons/legacy/More';
 import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
-import { ImageCell, ActionCell, NameCell } from './Cells';
-import Profile from './Profile';
+import { ActionCell, ImageCell, NameCell } from './Cells';
 import './DataTable.css';
 
 const data = mockUsers(20);
@@ -19,8 +20,8 @@ const DataTable = () => {
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
   const [selectedEmployee, setSelectedEmployeeId] = useState<any | null>(null); // Updated state
-  const [isEditing, setIsEditing] = useState(false); // Added state for editing mode
-  const [openModal, setOpenModal] = useState(false);
+
+  const navigate = useNavigate(); // Add useNavigate hook
 
   const handleSortColumn = (sortColumn, sortType) => {
     setSortColumn(sortColumn);
@@ -29,17 +30,7 @@ const DataTable = () => {
 
   const handleNameClick = (rowData: any) => {
     setSelectedEmployeeId(rowData.id);
-    setIsEditing(false); // Set to false when opening the modal to view details
-    setOpenModal(true);
-  };
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setIsEditing(false); // Reset editing mode when closing the modal
-  };
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setOpenModal(true);
+    navigate(`/employees/${rowData.id}`);
   };
 
   const filteredData = () => {
@@ -122,22 +113,9 @@ const DataTable = () => {
           <HeaderCell>
             <MoreIcon />
           </HeaderCell>
-          <ActionCell dataKey="id" onEditClick={() => handleEditClick()} />
+          <ActionCell />
         </Column>
       </Table>
-
-      <Modal open={openModal} onClose={handleCloseModal}>
-        <Modal.Body className="">
-          {selectedEmployee && (
-            <Profile employeeId={selectedEmployee} isEditingProp={isEditing} employees={data} />
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleCloseModal} appearance="primary">
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
 
       <DrawerView open={showDrawer} onClose={() => setShowDrawer(false)} />
     </>
