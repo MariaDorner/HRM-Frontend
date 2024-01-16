@@ -171,81 +171,36 @@ const DrawerView = (props: DrawerProps) => {
             <div key={index}>
               <Form.Group>
                 <Form.ControlLabel>Skill's name</Form.ControlLabel>
-                <Form.Control
-                  name={`skills[${index}].name`}
-                  value={skill.name}
-                  onChange={value => {
-                    const updatedSkills = [...skills];
-                    updatedSkills[index].name = value;
-                    setSkills(updatedSkills);
-                  }}
-                />
+                <Form.Control name={`skillsname-${index}`} value={skill.name} />
               </Form.Group>
               <Form.Group>
                 <Form.ControlLabel>Description</Form.ControlLabel>
-                <Input
-                  as="textarea"
-                  rows={3}
-                  placeholder="description"
-                  name={`skills[${index}].description`}
-                  value={skill.description}
-                  onChange={value => {
-                    const updatedSkills = [...skills];
-                    updatedSkills[index].description = value;
-                    setSkills(updatedSkills);
-                  }}
-                />
+                <Input as="textarea" rows={3} placeholder="description" value={skill.description} />
               </Form.Group>
+              <Button onClick={() => handleRemoveSkill(index)}>Remove</Button>
             </div>
           ))}
-          <Button onClick={handleAddSkill}>Add Skill</Button>
-          <Button onClick={handleRemoveSkill}>Remove</Button>
+          <Button onClick={handleAddSkill}>Add</Button>
 
           <h4 style={{ marginBottom: 20 }}>Education</h4>
-          {educations.map((edu, index) => (
+          {educations.map((education, index) => (
             <div key={index}>
-              <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
-                <Form.Group>
-                  <Form.ControlLabel>Education</Form.ControlLabel>
-                  <Form.Control
-                    name={`education[${index}].name`}
-                    value={edu.name}
-                    onChange={value => {
-                      const updatedEducation = [...educations];
-                      updatedEducation[index].name = value;
-                      setEducations(updatedEducation);
-                    }}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.ControlLabel>Duration</Form.ControlLabel>
-                  <Form.Control
-                    name={`education[${index}].duration`}
-                    value={edu.duration}
-                    onChange={value => {
-                      const updatedEducation = [...educations];
-                      updatedEducation[index].duration = value;
-                      setEducations(updatedEducation);
-                    }}
-                  />
-                </Form.Group>
-              </Stack>
+              <Form.Group>
+                <Form.ControlLabel>Education</Form.ControlLabel>
+                <Form.Control name={`educ-${index}`} value={education.name} />
+              </Form.Group>
+              <Form.Group>
+                <Form.ControlLabel>Duration</Form.ControlLabel>
+                <Form.Control name={`dura-${index}`} value={education.duration} />
+              </Form.Group>
               <Form.Group>
                 <Form.ControlLabel>Description</Form.ControlLabel>
-                <Form.Control
-                  name={`education[${index}].description`}
-                  value={edu.description}
-                  onChange={value => {
-                    const updatedEducation = [...educations];
-                    updatedEducation[index].description = value;
-                    setEducations(updatedEducation);
-                  }}
-                />
+                <Form.Control name={`desc-${index}`} value={education.description} />
               </Form.Group>
+              <Button onClick={() => handleRemoveEducation(index)}>Remove</Button>
             </div>
           ))}
-          <Button onClick={handleAddEducation}>Add Education</Button>
-          <Button onClick={handleRemoveEducation}>Remove</Button>
+          <Button onClick={handleAddEducation}>Add</Button>
         </Form>
       </Drawer.Body>
     </Drawer>
