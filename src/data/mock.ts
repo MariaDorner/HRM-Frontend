@@ -19,11 +19,20 @@ export function mockUsers(length: number) {
     const workDescription = faker.lorem.sentence();
     const managerName = faker.name.findName();
     const startDate = faker.date.past().toLocaleDateString();
-    const skillName = faker.random.word();
-    const skillDescription = faker.lorem.words(5);
-    const educationName = faker.random.word();
-    const educationDuration = faker.datatype.number({ min: 2, max: 6 }) + ' years';
-    const educationsDescription = faker.lorem.words(10);
+    const skills = Array.from({ length: 3 }, () => {
+      return {
+        skillName: faker.random.word(),
+        description: faker.lorem.words(5)
+      };
+    });
+
+    const educations = Array.from({ length: 2 }, () => {
+      return {
+        educationName: faker.random.word(),
+        duration: faker.datatype.number({ min: 2, max: 6 }) + ' years',
+        description: faker.lorem.words(10)
+      };
+    });
 
     return {
       id: rowIndex + 1,
@@ -40,11 +49,8 @@ export function mockUsers(length: number) {
       workDescription,
       managerName,
       startDate,
-      skillName,
-      skillDescription,
-      educationName,
-      educationDuration,
-      educationsDescription
+      skills,
+      educations
     };
   };
 

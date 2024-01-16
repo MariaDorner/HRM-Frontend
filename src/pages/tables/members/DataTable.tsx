@@ -10,7 +10,7 @@ import './DataTable.css';
 
 const data = mockUsers(20).map(user => ({
   ...user,
-  isActive: Math.random() < 0.5 // Example: randomly assign active status
+  isActive: user.id % 2 === 0
 }));
 
 const { Column, HeaderCell, Cell } = Table;
@@ -108,6 +108,7 @@ const DataTable = () => {
       </Stack>
 
       <Table
+        style={{ borderCollapse: 'collapse', width: '100%' }}
         height={Math.max(getHeight(window) - 200, 400)}
         data={filteredData()}
         sortColumn={sortColumn}

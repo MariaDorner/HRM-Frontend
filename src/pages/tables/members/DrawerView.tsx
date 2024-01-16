@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Drawer,
   DrawerProps,
@@ -28,6 +28,33 @@ const DrawerView = (props: DrawerProps) => {
   const toaster = useToaster();
   const [uploading, setUploading] = React.useState(false);
   const [fileInfo, setFileInfo] = React.useState(null);
+
+  const [skills, setSkills] = useState<{ name: string; description: string }[]>([]);
+  const [educations, setEducations] = useState<
+    { name: string; duration: string; description: string }[]
+  >([]);
+
+  const handleAddSkill = () => {
+    // Add a new skill to the skills array
+    setSkills([...skills, { name: '', description: '' }]);
+  };
+
+  const handleRemoveSkill = (index: number) => {
+    const newSkills = [...skills];
+    newSkills.splice(index, 1);
+    setSkills(newSkills);
+  };
+
+  const handleAddEducation = () => {
+    // Add a new education entry to the education array
+    setEducations([...educations, { name: '', duration: '', description: '' }]);
+  };
+
+  const handleRemoveEducation = (index: number) => {
+    const newEducations = [...educations];
+    newEducations.splice(index, 1);
+    setEducations(newEducations);
+  };
 
   return (
     <Drawer backdrop="static" size="sm" placement="right" onClose={onClose} {...rest}>
@@ -140,30 +167,85 @@ const DrawerView = (props: DrawerProps) => {
           </Stack>
 
           <h4 style={{ marginBottom: 20 }}>Skills</h4>
-          <Form.Group>
-            <Form.ControlLabel>Skill's name</Form.ControlLabel>
-            <Form.Control name="skillsname" />
-          </Form.Group>
-          <Form.Group>
-            <Form.ControlLabel>Description</Form.ControlLabel>
-            <Input as="textarea" rows={3} placeholder="description" />
-          </Form.Group>
+          {skills.map((skill, index) => (
+            <div key={index}>
+              <Form.Group>
+                <Form.ControlLabel>Skill's name</Form.ControlLabel>
+                <Form.Control
+                  name={`skills[${index}].name`}
+                  value={skill.name}
+                  onChange={value => {
+                    const updatedSkills = [...skills];
+                    updatedSkills[index].name = value;
+                    setSkills(updatedSkills);
+                  }}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.ControlLabel>Description</Form.ControlLabel>
+                <Input
+                  as="textarea"
+                  rows={3}
+                  placeholder="description"
+                  name={`skills[${index}].description`}
+                  value={skill.description}
+                  onChange={value => {
+                    const updatedSkills = [...skills];
+                    updatedSkills[index].description = value;
+                    setSkills(updatedSkills);
+                  }}
+                />
+              </Form.Group>
+            </div>
+          ))}
+          <Button onClick={handleAddSkill}>Add Skill</Button>
+          <Button onClick={handleRemoveSkill}>Remove</Button>
 
           <h4 style={{ marginBottom: 20 }}>Education</h4>
-          <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
-            <Form.Group>
-              <Form.ControlLabel>Education</Form.ControlLabel>
-              <Form.Control name="educ" style={{ width: 300 }} />
-            </Form.Group>
-            <Form.Group>
-              <Form.ControlLabel>Duration</Form.ControlLabel>
-              <Form.Control name="dura" style={{ width: 150 }} />
-            </Form.Group>
-          </Stack>
-          <Form.Group>
-            <Form.ControlLabel>Description</Form.ControlLabel>
-            <Form.Control name="desc" />
-          </Form.Group>
+          {educations.map((edu, index) => (
+            <div key={index}>
+              <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
+                <Form.Group>
+                  <Form.ControlLabel>Education</Form.ControlLabel>
+                  <Form.Control
+                    name={`education[${index}].name`}
+                    value={edu.name}
+                    onChange={value => {
+                      const updatedEducation = [...educations];
+                      updatedEducation[index].name = value;
+                      setEducations(updatedEducation);
+                    }}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.ControlLabel>Duration</Form.ControlLabel>
+                  <Form.Control
+                    name={`education[${index}].duration`}
+                    value={edu.duration}
+                    onChange={value => {
+                      const updatedEducation = [...educations];
+                      updatedEducation[index].duration = value;
+                      setEducations(updatedEducation);
+                    }}
+                  />
+                </Form.Group>
+              </Stack>
+              <Form.Group>
+                <Form.ControlLabel>Description</Form.ControlLabel>
+                <Form.Control
+                  name={`education[${index}].description`}
+                  value={edu.description}
+                  onChange={value => {
+                    const updatedEducation = [...educations];
+                    updatedEducation[index].description = value;
+                    setEducations(updatedEducation);
+                  }}
+                />
+              </Form.Group>
+            </div>
+          ))}
+          <Button onClick={handleAddEducation}>Add Education</Button>
+          <Button onClick={handleRemoveEducation}>Remove</Button>
         </Form>
       </Drawer.Body>
     </Drawer>
