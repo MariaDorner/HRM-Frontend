@@ -1,6 +1,6 @@
 import React from 'react';
-import { Popover, Whisper, IconButton, Table, CellProps } from 'rsuite';
-import TrashIcon from '@rsuite/icons/Trash';
+import { Popover, Whisper, Table, CellProps, Button } from 'rsuite';
+import EditIcon from '@rsuite/icons/Edit';
 const { Cell } = Table;
 
 interface NameCellProps extends CellProps {
@@ -34,7 +34,7 @@ export const ImageCell = ({ rowData, dataKey, ...props }: CellProps) => (
   <Cell {...props} style={{ padding: 0 }}>
     <div
       style={{
-        width: 0,
+        width: 40,
         height: 40,
         background: '#f5f5f5',
         borderRadius: 6,
@@ -43,15 +43,41 @@ export const ImageCell = ({ rowData, dataKey, ...props }: CellProps) => (
         display: 'inline-block'
       }}
     >
-      <img src={rowData[dataKey!]} width="40" />
+      <img src={rowData.avatar} width="38" />
     </div>
   </Cell>
 );
 
-export const ActionCell = props => {
+const ActionCell = ({ onEditClick, rowData }) => {
+  const handleEditClick = () => {
+    onEditClick(rowData);
+  };
+
   return (
-    <Cell {...props} className="link-group">
-      <IconButton appearance="subtle" icon={<TrashIcon />} />
-    </Cell>
+    <div
+      style={{
+        width: 80,
+        height: 40,
+        background: '#f5f5f5',
+        borderRadius: 6,
+        marginTop: 2,
+        overflow: 'hidden',
+        display: 'inline-block'
+      }}
+    >
+      <Button
+        style={{
+          width: 40,
+          height: 30,
+          padding: 4,
+          margin: 3
+        }}
+        onClick={handleEditClick}
+      >
+        <EditIcon style={{ color: '#000039' }} />
+      </Button>
+    </div>
   );
 };
+
+export default ActionCell;

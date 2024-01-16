@@ -1,0 +1,59 @@
+[33mcommit d788359c7446e2ea21a8c45ab001a8dee6506530[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mupdate[m[33m, [m[1;31morigin/update[m[33m)[m
+Author: Ayat Nasri <aayat.nasri@gmail.com>
+Date:   Fri Jan 12 11:52:46 2024 +0100
+
+    Add Edit-button in List-Employees
+
+[33mcommit 4f28656faf2ebf9d60c947f373049185e2f006c2[m
+Author: seham jadalhaq <seham.gad91@gmail.com>
+Date:   Tue Jan 9 12:55:35 2024 +0100
+
+    added the modal in the component DataTable and the file datatable.css , edited the style and adding the transforming for the background , make the modal larger and background hidden
+
+[33mcommit 58936182820008848f616f0000a8358271ae9876[m[33m ([m[1;32mdevlopmenet[m[33m)[m
+Author: seham jadalhaq <seham.gad91@gmail.com>
+Date:   Thu Dec 21 14:56:01 2023 +0100
+
+    Add the profile editing
+
+[33mcommit 1c14812ae123f7234dd0785230e43d6bec2a4cb3[m
+Author: seham jadalhaq <seham.gad91@gmail.com>
+Date:   Tue Dec 19 11:50:44 2023 +0100
+
+    Update the cell component
+
+[33mcommit f3733f30927cd49fa2400f2f4d833114bb151e14[m
+Author: seham jadalhaq <seham.gad91@gmail.com>
+Date:   Tue Dec 19 11:34:54 2023 +0100
+
+    add the new com profile
+
+[33mcommit 7c1fcc1fee59371640c5dffc8e806e76fb52e672[m
+Author: seham jadalhaq <seham.gad91@gmail.com>
+Date:   Fri Dec 15 13:23:37 2023 +0100
+
+    Add a new employee
+
+[33mcommit 8221ad27ffef755467c2dac23a606dcabbc9ee03[m
+Author: seham jadalhaq <seham.gad91@gmail.com>
+Date:   Thu Dec 14 13:50:14 2023 +0100
+
+    work in the employees list
+
+[33mcommit cf3579712d52047a3b30bc696dfe6c29761d9721[m
+Author: seham jadalhaq <seham.gad91@gmail.com>
+Date:   Thu Dec 14 12:32:44 2023 +0100
+
+     add the employee list
+
+[33mcommit b45cd6cfbbf057e38acf86d22c383ff476e349d8[m
+Author: seham jadalhaq <seham.gad91@gmail.com>
+Date:   Wed Dec 13 14:29:20 2023 +0100
+
+    add the new editings
+
+[33mcommit 1815191b265b80631fd3b5d7408701c6a85370b7[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: MariaDorner <dornermarika@gmail.com>
+Date:   Tue Dec 12 11:32:39 2023 +0100
+
+    init commit
