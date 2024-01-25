@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Input, Panel, PanelGroup } from 'rsuite';
+import { Button, Input, Panel } from 'rsuite';
 import './ProfileModal.css';
 
 interface ProfileProps {
