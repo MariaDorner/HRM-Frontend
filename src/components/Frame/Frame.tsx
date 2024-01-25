@@ -57,7 +57,7 @@ const Frame = (props: FrameProps) => {
   return (
     <Container className="frame">
       <Sidebar
-        style={{ display: 'flex', flexDirection: 'column' }}
+        style={{ display: 'flex', flexDirection: 'column', background: 'white' }}
         width={expand ? 260 : 56}
         collapsible
       >
