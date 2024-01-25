@@ -13,6 +13,10 @@ interface ProfileProps {
 const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, employees }) => {
   // Customize this modal based on the structure of your employee data
   const selectedEmployee = employees.find(employee => employee.id === employeeId);
+  if (!selectedEmployee) {
+    return <div>No employee found</div>;
+  }
+
   const [editedFields, setEditedFields] = useState({
     name: selectedEmployee?.name || '',
     email: selectedEmployee?.email || '',
