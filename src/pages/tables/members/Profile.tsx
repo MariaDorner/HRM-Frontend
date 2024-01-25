@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Input, Panel, PanelGroup } from 'rsuite';
+import { Button, Input, Panel } from 'rsuite';
 import './ProfileModal.css';
+import EmailIcon from '@rsuite/icons/Email';
+import PhoneIcon from '@rsuite/icons/Phone';
+import CakeIcon from '@rsuite/icons/Phone';
 
 interface ProfileProps {
   employeeId: any;
@@ -74,54 +77,115 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
       {selectedEmployee && (
         <div className="profile-container">
           <div className="profile-content">
-            <div className="profile-personal-info">
-              <div className="profile-avatar">
+            <div
+              className="profile-personal-info"
+              style={{ backgroundColor: '#E0E0E0', padding: '10px' }}
+            >
+              <div
+                className="profile-avatar"
+                style={{ backgroundColor: '#E0E0E0', padding: '10px' }}
+              >
                 <img src={selectedEmployee.avatar} alt={selectedEmployee.firstName} />
               </div>
               <div className="profile-info">
-                <h4 style={{ fontWeight: 'bold', color: '#333' }}>Personal Information</h4>
+                <h4
+                  style={{ fontWeight: 'bold', color: '#72A0C1', fontSize: '15px', border: 'none' }}
+                >
+                  Personal Information
+                </h4>
                 <Input
+                  className="inp"
                   placeholder="Name"
                   value={editedFields.name}
                   onChange={value => handleFieldChange('name', value)}
                   disabled={!isEditing}
-                  style={{ fontWeight: 'bold', color: '#333' }}
+                  style={{
+                    fontWeight: 'bold',
+                    color: '#333',
+                    fontSize: '14px',
+                    backgroundColor: '#E0E0E0',
+                    border: 'none'
+                  }}
                 />
-                <Input
-                  placeholder="Email"
-                  value={editedFields.email}
-                  onChange={value => handleFieldChange('email', value)}
-                  disabled={!isEditing}
-                  style={{ fontWeight: 'bold', color: '#333' }}
-                />
-                <Input
-                  placeholder="Phone 1"
-                  value={editedFields.phone1}
-                  onChange={value => handleFieldChange('phone1', value)}
-                  disabled={!isEditing}
-                  style={{ fontWeight: 'bold', color: '#333' }}
-                />
-                <Input
-                  placeholder="Phone 2"
-                  value={editedFields.phone2}
-                  onChange={value => handleFieldChange('phone2', value)}
-                  disabled={!isEditing}
-                  style={{ fontWeight: 'bold', color: '#333' }}
-                />
-                <Input
-                  placeholder="Birthday"
-                  value={editedFields.Birthday}
-                  onChange={value => handleFieldChange('Birthday', value)}
-                  disabled={!isEditing}
-                  style={{ fontWeight: 'bold', color: '#333' }}
-                />
+                <div className="emil">
+                  <EmailIcon style={{ padding: '1px', marginTop: '10px' }} />
+                  <Input
+                    placeholder="Email"
+                    value={editedFields.email}
+                    onChange={value => handleFieldChange('email', value)}
+                    disabled={!isEditing}
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#333',
+                      border: 'none',
+                      fontSize: '12px',
+                      backgroundColor: '#E0E0E0'
+                    }}
+                  />
+                </div>
+                <div className="ph">
+                  <div className="iph">
+                    <PhoneIcon
+                      style={{ backgroundColor: '#E0E0E0', padding: '1px', marginTop: '5px' }}
+                    />
+                  </div>
+                  <Input
+                    placeholder="Phone 1"
+                    value={editedFields.phone1}
+                    onChange={value => handleFieldChange('phone1', value)}
+                    disabled={!isEditing}
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#333',
+                      border: 'none',
+                      fontSize: '12px',
+                      backgroundColor: '#E0E0E0'
+                    }}
+                  />
+                </div>
+                <div className="ph">
+                  <div className="iph">
+                    <PhoneIcon
+                      style={{ backgroundColor: '#E0E0E0', padding: '1px', marginTop: '5px' }}
+                    />
+                  </div>
+                  <Input
+                    placeholder="Phone 2"
+                    value={editedFields.phone2}
+                    onChange={value => handleFieldChange('phone2', value)}
+                    disabled={!isEditing}
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#333',
+                      border: 'none',
+                      fontSize: '12px',
+                      backgroundColor: '#E0E0E0'
+                    }}
+                  />
+                </div>
+                <div className="birthday">
+                  <Input
+                    placeholder="Birthday"
+                    value={editedFields.Birthday}
+                    onChange={value => handleFieldChange('Birthday', value)}
+                    disabled={!isEditing}
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#333',
+                      border: 'none',
+                      fontSize: '12px',
+                      backgroundColor: '#E0E0E0'
+                    }}
+                  />
+                </div>
               </div>
 
               <div className="profile-actions">
                 <Button
+                  className="btn"
                   onClick={handleEditClick}
                   appearance="default"
-                  style={{ marginRight: '20px' }}
+                  style={{ marginRight: '20px', backgroundColor: '#72A0C1', color: '#FFFFFF' }}
                 >
                   Edit
                 </Button>
@@ -135,70 +199,99 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
           </div>
 
           <div className="profile-details">
-            <Panel header="work" bordered>
+            <Panel
+              header={
+                <span style={{ fontWeight: 'bold', color: '#72A0C1', fontSize: '15px' }}>Work</span>
+              }
+              bordered
+            >
               <Input
                 placeholder="Job Title"
                 value={editedFields.jobTitle}
                 onChange={value => handleFieldChange('jobTitle', value)}
                 disabled={!isEditing}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
               <Input
                 placeholder="Department"
                 value={editedFields.department}
                 onChange={value => handleFieldChange('department', value)}
                 disabled={!isEditing}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
               <Input
                 placeholder="Work Description"
                 value={editedFields.workDescription}
                 onChange={value => handleFieldChange('workDescription', value)}
                 disabled={!isEditing}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
               <Input
                 placeholder="Manager Name"
                 value={editedFields.managerName}
                 onChange={value => handleFieldChange('managerName', value)}
                 disabled={!isEditing}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
               <Input
                 placeholder="Start Date"
                 value={editedFields.startDate}
                 onChange={value => handleFieldChange('startDate', value)}
                 disabled={!isEditingProp}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
             </Panel>
-            <Panel header="Skills " bordered>
+            <Panel
+              header={
+                <span style={{ fontWeight: 'bold', color: '#72A0C1', fontSize: '15px' }}>
+                  Skills
+                </span>
+              }
+              bordered
+            >
               <Input
                 placeholder="Skill Name"
                 value={editedFields.skillName}
                 onChange={value => handleFieldChange('skillName', value)}
                 disabled={!isEditingProp}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
               <Input
                 placeholder="Skill Description"
                 value={editedFields.skillDescription}
                 onChange={value => handleFieldChange('skillDescription', value)}
                 disabled={!isEditing}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
             </Panel>
-            <Panel header="Education " bordered>
+            <Panel
+              header={
+                <span style={{ fontWeight: 'bold', color: '#72A0C1', fontSize: '15px' }}>
+                  Education
+                </span>
+              }
+              bordered
+            >
               <Input
                 placeholder="Education Name"
                 value={editedFields.educationName}
                 onChange={value => handleFieldChange('educationName', value)}
                 disabled={!isEditing}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
               <Input
                 placeholder="Duration"
                 value={editedFields.duration}
                 onChange={value => handleFieldChange('duration', value)}
                 disabled={!isEditing}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
               <Input
                 placeholder="Education Description"
                 value={editedFields.educationsDescription}
                 onChange={value => handleFieldChange('educationsDescription', value)}
                 disabled={!isEditing}
+                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
             </Panel>
           </div>

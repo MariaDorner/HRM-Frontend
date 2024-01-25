@@ -14,20 +14,27 @@
   margin-top: 50px;
   width: 200px;
   height: 200px;
-  border-radius: 50%;
   object-fit: cover;
+  border-radius: 30%;
 }
-
+.emil {
+  display: flex;
+  flex-direction: row;
+}
 .profile-info {
-  margin-top: 55px;
+  margin-top: 50px;
+}
+.ph {
+  display: flex;
+  flex-direction: row;
 }
 .profile-personal-info {
   width: 100%;
 }
 .profile-details {
-  width: 60%;
+  width: 100%;
   margin-top: 50px;
-  margin-left: 50px;
+  margin-left: 20px;
 }
 
 /* Add the following style to adjust the positioning of the Edit button */
