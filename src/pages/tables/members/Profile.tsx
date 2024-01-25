@@ -3,7 +3,6 @@ import { Button, Input, Panel } from 'rsuite';
 import './ProfileModal.css';
 import EmailIcon from '@rsuite/icons/Email';
 import PhoneIcon from '@rsuite/icons/Phone';
-import CakeIcon from '@rsuite/icons/Phone';
 
 interface ProfileProps {
   employeeId: any;
