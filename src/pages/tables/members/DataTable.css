@@ -1,0 +1,42 @@
+.rs-modal-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 800px;
+  min-height: 100px;
+  background-color: rgba(0, 0, 8, 0.7);
+}
+
+.rs-modal {
+  align-items: center;
+  min-width: 800px;
+  min-height: 100px;
+  background-color: rgba(0, 0, 9, 0.7);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  animation: fadeInDown 0.8s;
+}
+.btnClose {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

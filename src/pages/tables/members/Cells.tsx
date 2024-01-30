@@ -1,31 +1,30 @@
 import React from 'react';
-import { Popover, Whisper, Checkbox, Dropdown, IconButton, Table, CellProps } from 'rsuite';
-import MoreIcon from '@rsuite/icons/legacy/More';
-
+import { Popover, Whisper, Table, CellProps, Button } from 'rsuite';
+import EditIcon from '@rsuite/icons/Edit';
 const { Cell } = Table;
 
-export const NameCell = ({ rowData, dataKey, ...props }: CellProps) => {
+interface NameCellProps extends CellProps {
+  dataKey: string; // Add dataKey prop
+  onNameClick: (rowData: any) => void; // Add onNameClick prop
+}
+
+export const NameCell: React.FC<NameCellProps> = ({ rowData, dataKey, onNameClick, ...props }) => {
   const speaker = (
     <Popover title="Description">
       <p>
         <b>Name:</b> {rowData.name}
       </p>
-      <p>
-        <b>Gender:</b> {rowData.gender}
-      </p>
-      <p>
-        <b>City:</b> {rowData.city}
-      </p>
-      <p>
-        <b>Street:</b> {rowData.street}
-      </p>
     </Popover>
   );
+
+  const handleClick = () => {
+    onNameClick(rowData); // Call the provided onNameClick callback
+  };
 
   return (
     <Cell {...props}>
       <Whisper placement="top" speaker={speaker}>
-        <a>{dataKey ? rowData[dataKey] : null}</a>
+        <a onClick={handleClick}>{dataKey ? rowData[dataKey] : null}</a>
       </Whisper>
     </Cell>
   );
@@ -44,57 +43,41 @@ export const ImageCell = ({ rowData, dataKey, ...props }: CellProps) => (
         display: 'inline-block'
       }}
     >
-      <img src={rowData[dataKey!]} width="40" />
+      <img src={rowData.avatar} width="38" />
     </div>
   </Cell>
 );
 
-export const CheckCell = ({
-  rowData,
-  onChange,
-  checkedKeys,
-  dataKey,
-  ...props
-}: CellProps & {
-  checkedKeys: number[];
-  onChange: (value: any, checked: boolean) => void;
-}) => (
-  <Cell {...props} style={{ padding: 0 }}>
-    <div style={{ lineHeight: '46px' }}>
-      <Checkbox
-        value={rowData[dataKey!]}
-        inline
-        onChange={onChange}
-        checked={checkedKeys.some(item => item === rowData[dataKey!])}
-      />
-    </div>
-  </Cell>
-);
-
-const renderMenu = ({ onClose, left, top, className }: any, ref) => {
-  const handleSelect = eventKey => {
-    onClose();
-    console.log(eventKey);
+const ActionCell = ({ onEditClick, rowData }) => {
+  const handleEditClick = () => {
+    onEditClick(rowData);
   };
+
   return (
-    <Popover ref={ref} className={className} style={{ left, top }} full>
-      <Dropdown.Menu onSelect={handleSelect}>
-        <Dropdown.Item eventKey={1}>Follow</Dropdown.Item>
-        <Dropdown.Item eventKey={2}>Sponsor</Dropdown.Item>
-        <Dropdown.Item eventKey={3}>Add to friends</Dropdown.Item>
-        <Dropdown.Item eventKey={4}>View Profile</Dropdown.Item>
-        <Dropdown.Item eventKey={5}>Block</Dropdown.Item>
-      </Dropdown.Menu>
-    </Popover>
+    <div
+      style={{
+        width: 80,
+        height: 40,
+        background: '#f5f5f5',
+        borderRadius: 6,
+        marginTop: 2,
+        overflow: 'hidden',
+        display: 'inline-block'
+      }}
+    >
+      <Button
+        style={{
+          width: 40,
+          height: 30,
+          padding: 4,
+          margin: 3
+        }}
+        onClick={handleEditClick}
+      >
+        <EditIcon style={{ color: '#000039' }} />
+      </Button>
+    </div>
   );
 };
 
-export const ActionCell = props => {
-  return (
-    <Cell {...props} className="link-group">
-      <Whisper placement="autoVerticalEnd" trigger="click" speaker={renderMenu}>
-        <IconButton appearance="subtle" icon={<MoreIcon />} />
-      </Whisper>
-    </Cell>
-  );
-};
+export default ActionCell;
