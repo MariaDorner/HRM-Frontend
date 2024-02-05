@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input, InputGroup, Table, Button, DOMHelper, Stack, Toggle } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
@@ -7,10 +7,10 @@ import { mockUsers } from '@/data/mock';
 import ActionCell, { ImageCell, NameCell } from './Cells';
 import './DataTable.css';
 
-const data = mockUsers(20).map(user => ({
-  ...user,
-  isActive: user.id % 2 === 0
-}));
+// const data = mockUsers(20).map(user => ({
+//   ...user,
+//   isActive: user.id % 2 === 0
+// }));
 
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
@@ -21,9 +21,29 @@ const DataTable = () => {
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
   const [selectedEmployee, setSelectedEmployeeId] = useState<any | null>(null); // Updated state
-
+  const [tableData, setTableData] = useState<{ data: { users: Array<any> } } | undefined>();
   const navigate = useNavigate(); // Add useNavigate hook
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/users');
+      const data = await response.json();
+      const enhancedData = data.data.users.map(user => ({
+        ...user,
+        isActive: user.id % 2 === 0,
+        fullname: `${user.firstname} ${user.lastname}`,
+        departmentTitle: user.Works.length > 0 ? user.Works[0].Department.title : ''
+      }));
+      setTableData({ data: { users: enhancedData } });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  const userData = tableData?.data?.users;
+  console.log(userData);
   const CustomToggle = ({ checked, onChange }) => (
     <label className={`toggle-label ${checked ? 'active' : 'inactive'}`}>
       <Toggle checked={checked} onChange={onChange} />
@@ -53,14 +73,23 @@ const DataTable = () => {
   };
 
   const filteredData = () => {
-    const filtered = data.filter(item => {
-      return item.name.toLowerCase().includes(searchKeyword.toLowerCase());
+    if (!userData) {
+      return [];
+    }
+    const filtered = userData.filter(item => {
+      const fullName = `${item.firstname} ${item.lastname}`;
+      return fullName.toLowerCase().includes(searchKeyword.toLowerCase());
     });
 
     if (sortColumn && sortType) {
       return filtered.sort((a, b) => {
         let x: any = a[sortColumn];
         let y: any = b[sortColumn];
+
+        if (sortColumn === 'fullname') {
+          x = `${a.firstname} ${a.lastname}`;
+          y = `${b.firstname} ${b.lastname}`;
+        }
 
         if (typeof x === 'string') {
           x = x.charCodeAt(0);
@@ -129,17 +158,17 @@ const DataTable = () => {
 
         <Column width={80} align="center">
           <HeaderCell>Avatar</HeaderCell>
-          <ImageCell rowData={data} dataKey="avatar" />
+          <ImageCell rowData={userData} dataKey="avatar" />
         </Column>
 
         <Column minWidth={160} flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
-          <NameCell dataKey="name" onNameClick={x => handleNameClick(x)} />
+          <NameCell dataKey="fullname" onNameClick={x => handleNameClick(x)} />
         </Column>
 
         <Column minWidth={160} flexGrow={1} sortable>
           <HeaderCell>Department</HeaderCell>
-          <Cell dataKey="department" />
+          <Cell dataKey="departmentTitle" />
         </Column>
 
         <Column width={300}>
@@ -149,7 +178,7 @@ const DataTable = () => {
 
         <Column width={120}>
           <HeaderCell>...</HeaderCell>
-          <ActionCell rowData={data} onEditClick={x => handleNameClick(x)} />
+          <ActionCell rowData={userData} onEditClick={x => handleNameClick(x)} />
         </Column>
       </Table>
 

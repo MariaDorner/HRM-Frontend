@@ -46,7 +46,56 @@ const DrawerView = (props: DrawerProps) => {
       status: boolean;
     }[]
   >([]);
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [phone1, setPhone1] = useState('');
+  const [phone2, setPhone2] = useState('');
+  const [password, setPassword] = useState('');
+  const [birthdate, setBirthdate] = useState<Date | null>(null);
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
 
+  const handleSubmit = async () => {
+    const userData = {
+      firstname: firstname,
+      lastname: lastname,
+      birthdata: birthdate?.toISOString().split('T')[0] || '',
+      phone1: phone1,
+      phone2: phone2,
+      password: password,
+      address: address,
+      email: email,
+      description: description,
+      profileImage: fileInfo || '',
+      status: true,
+      skills: skills.map((skill, index) => index + 1),
+      work: works.map((work, index) => index + 1),
+      education: educations.map((education, index) => index + 1)
+    };
+    try {
+      // Make a POST request to your API endpoint
+      const response = await fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+
+      if (response.ok) {
+        // Handle success
+        toaster.push(<Message type="success">User created successfully</Message>);
+        // You may also want to reset the form or close the drawer here
+      } else {
+        // Handle error
+        toaster.push(<Message type="error">Failed to create user</Message>);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toaster.push(<Message type="error">An unexpected error occurred</Message>);
+    }
+  };
   const handleInputChange = (index: number, field: string, value: string | boolean) => {
     // Create a copy of the current state
     const updatedWorks = [...works];
@@ -106,7 +155,7 @@ const DrawerView = (props: DrawerProps) => {
       <Drawer.Header>
         <Drawer.Title>Add a new member</Drawer.Title>
         <Drawer.Actions>
-          <Button onClick={onClose} appearance="primary">
+          <Button onClick={handleSubmit} appearance="primary">
             Confirm
           </Button>
           <Button onClick={onClose} appearance="subtle">
@@ -126,7 +175,8 @@ const DrawerView = (props: DrawerProps) => {
                   fileListVisible={false}
                   listType="picture"
                   action="//jsonplaceholder.typicode.com/posts/"
-                  onUpload={file => {
+                  onUpload={(file, event) => {
+                    event.stopPropagation();
                     setUploading(true);
                     previewFile(file.blobFile, value => {
                       setFileInfo(value);
@@ -155,37 +205,80 @@ const DrawerView = (props: DrawerProps) => {
               </Form.Group>
               <Form.Group style={{ marginLeft: 20, marginRight: 0 }}>
                 <Form.ControlLabel>First Name</Form.ControlLabel>
-                <Form.Control name="firstname" style={{ width: 275, marginTop: 5 }} />
+                <Form.Control
+                  name="firstname"
+                  value={firstname}
+                  onChange={value => setFirstname(value)}
+                  style={{ width: 275, marginTop: 5 }}
+                />
 
                 <Form.ControlLabel>Last Name</Form.ControlLabel>
-                <Form.Control name="lastname" style={{ width: 275, marginTop: 5 }} />
+                <Form.Control
+                  name="lastname"
+                  value={lastname}
+                  onChange={value => setLastname(value)}
+                  style={{ width: 275, marginTop: 5 }}
+                />
 
                 <Form.ControlLabel>Email</Form.ControlLabel>
-                <Form.Control name="email" type="email" style={{ width: 275, marginTop: 5 }} />
+                <Form.Control
+                  name="email"
+                  type="email"
+                  value={email}
+                  onChange={value => setEmail(value)}
+                  style={{ width: 275, marginTop: 5 }}
+                />
+                <Form.ControlLabel>Password</Form.ControlLabel>
+                <Form.Control
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={value => setPassword(value)}
+                  style={{ width: 275, marginTop: 5 }}
+                />
               </Form.Group>
             </Form>
           </Stack>
           <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
             <Form.Group>
               <Form.ControlLabel>Phone 1</Form.ControlLabel>
-              <Form.Control name="phone1" style={{ width: 200 }} />
+              <Form.Control
+                name="phone1"
+                value={phone1}
+                onChange={value => setPhone1(value)}
+                style={{ width: 200 }}
+              />
             </Form.Group>
             <Form.Group>
               <Form.ControlLabel>Phone 2</Form.ControlLabel>
-              <Form.Control name="phone2" style={{ width: 200 }} />
+              <Form.Control
+                name="phone2"
+                value={phone2}
+                onChange={value => setPhone2(value)}
+                style={{ width: 200 }}
+              />
             </Form.Group>
           </Stack>
           <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
             <Form.Group>
               <Form.ControlLabel>Birthday</Form.ControlLabel>
-              <DatePicker showWeekNumbers style={{ width: 200 }} />
+              <DatePicker
+                showWeekNumbers
+                style={{ width: 200 }}
+                value={birthdate}
+                onChange={value => setBirthdate(value)}
+              />
             </Form.Group>
             <Form.Group>
               <Form.ControlLabel>Address</Form.ControlLabel>
-              <Form.Control name="address" style={{ width: 200 }} />
+              <Form.Control
+                name="address"
+                value={address}
+                onChange={value => setAddress(value)}
+                style={{ width: 200 }}
+              />
             </Form.Group>
           </Stack>
-
           <hr />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <h4 style={{ marginBottom: 30 }}>Work information</h4>

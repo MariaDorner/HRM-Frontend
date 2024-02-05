@@ -12,17 +12,21 @@ interface ProfileProps {
 
 const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, employees }) => {
   // Customize this modal based on the structure of your employee data
-  const selectedEmployee = employees.find(employee => employee.id === employeeId);
-  if (!selectedEmployee) {
+  const selectedEmployee = employees;
+
+  console.log('employees:', employees);
+  console.log('selectedEmployee:', selectedEmployee);
+
+  if (!selectedEmployee || selectedEmployee === null) {
     return <div>No employee found</div>;
   }
 
   const [editedFields, setEditedFields] = useState({
-    name: selectedEmployee?.name || '',
+    name: `${selectedEmployee?.firstname || ''} ${selectedEmployee?.lastname || ''}`,
     email: selectedEmployee?.email || '',
     phone1: selectedEmployee?.phone1 || '',
     phone2: selectedEmployee?.phone2 || '',
-    Birthday: selectedEmployee?.Birthday || '',
+    Birthday: selectedEmployee?.birthdata || '',
     address: selectedEmployee?.address || '',
     jobTitle: selectedEmployee?.jobTitle || '',
     department: selectedEmployee?.department || '',
@@ -74,7 +78,29 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
       [field]: value
     }));
   };
+  const [editedSkills, setEditedSkills] = useState(selectedEmployee?.Skills || []);
 
+  const handleSkillFieldChange = (index, field, value) => {
+    setEditedSkills(prevSkills =>
+      prevSkills.map((skill, i) => (i === index ? { ...skill, [field]: value } : skill))
+    );
+  };
+  const [editedWorks, setEditedWorks] = useState(selectedEmployee?.Works || []);
+
+  const handleWorkFieldChange = (index, field, value) => {
+    setEditedWorks(prevWorks =>
+      prevWorks.map((work, i) => (i === index ? { ...work, [field]: value } : work))
+    );
+  };
+  const [editedEducation, setEditedEducation] = useState(selectedEmployee?.Education || []);
+
+  const handleEducationFieldChange = (index, field, value) => {
+    setEditedEducation(prevEducation =>
+      prevEducation.map((education, i) =>
+        i === index ? { ...education, [field]: value } : education
+      )
+    );
+  };
   return (
     <>
       {selectedEmployee && (
@@ -208,39 +234,65 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
               }
               bordered
             >
-              <Input
-                placeholder="Job Title"
-                value={editedFields.jobTitle}
-                onChange={value => handleFieldChange('jobTitle', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
+              <div>
+                {selectedEmployee?.Works.map((work, index) => (
+                  <div key={index}>
+                    <Input
+                      placeholder={`Job Title ${index + 1}`}
+                      value={work.title}
+                      onChange={value => handleWorkFieldChange(index, 'title', value)}
+                      disabled={!isEditing}
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        fontSize: '15px',
+                        border: 'none'
+                      }}
+                    />
+                    <Input
+                      placeholder="Work Description"
+                      value={work.description}
+                      onChange={value => handleFieldChange('description', value)}
+                      disabled={!isEditing}
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        fontSize: '15px',
+                        border: 'none'
+                      }}
+                    />
+                    <Input
+                      placeholder="Manager Name"
+                      value={work.manager_name}
+                      onChange={value => handleFieldChange('managerName', value)}
+                      disabled={!isEditing}
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        fontSize: '15px',
+                        border: 'none'
+                      }}
+                    />
+                    <Input
+                      placeholder="Start Date"
+                      value={work.start_date}
+                      onChange={value => handleFieldChange('startDate', value)}
+                      disabled={!isEditingProp}
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        fontSize: '15px',
+                        border: 'none'
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
               <Input
                 placeholder="Department"
                 value={editedFields.department}
                 onChange={value => handleFieldChange('department', value)}
                 disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Work Description"
-                value={editedFields.workDescription}
-                onChange={value => handleFieldChange('workDescription', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Manager Name"
-                value={editedFields.managerName}
-                onChange={value => handleFieldChange('managerName', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Start Date"
-                value={editedFields.startDate}
-                onChange={value => handleFieldChange('startDate', value)}
-                disabled={!isEditingProp}
                 style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
             </Panel>
@@ -252,20 +304,38 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
               }
               bordered
             >
-              <Input
-                placeholder="Skill Name"
-                value={editedFields.skillName}
-                onChange={value => handleFieldChange('skillName', value)}
-                disabled={!isEditingProp}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Skill Description"
-                value={editedFields.skillDescription}
-                onChange={value => handleFieldChange('skillDescription', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
+              <div>
+                {selectedEmployee?.Skills.map((skill, index) => (
+                  <div key={index}>
+                    <label>Name</label>
+                    <Input
+                      placeholder={`Skill Name ${index + 1}`}
+                      value={skill.name}
+                      onChange={value => handleSkillFieldChange(index, 'name', value)}
+                      disabled={!isEditing}
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        fontSize: '15px',
+                        border: 'none'
+                      }}
+                    />
+                    <label>Description</label>
+                    <Input
+                      placeholder={`Skill Description ${index + 1}`}
+                      value={skill.description}
+                      onChange={value => handleSkillFieldChange(index, 'description', value)}
+                      disabled={!isEditing}
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        fontSize: '15px',
+                        border: 'none'
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </Panel>
             <Panel
               header={
@@ -275,27 +345,48 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
               }
               bordered
             >
-              <Input
-                placeholder="Education Name"
-                value={editedFields.educationName}
-                onChange={value => handleFieldChange('educationName', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Duration"
-                value={editedFields.duration}
-                onChange={value => handleFieldChange('duration', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Education Description"
-                value={editedFields.educationsDescription}
-                onChange={value => handleFieldChange('educationsDescription', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
+              <div>
+                {selectedEmployee?.Education.map((education, index) => (
+                  <div key={index}>
+                    <Input
+                      placeholder={`Education Name ${index + 1}`}
+                      value={education.name}
+                      onChange={value => handleEducationFieldChange(index, 'name', value)}
+                      disabled={!isEditing}
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        fontSize: '15px',
+                        border: 'none'
+                      }}
+                    />
+                    <Input
+                      placeholder="Duration"
+                      value={education.duration}
+                      onChange={value => handleFieldChange('duration', value)}
+                      disabled={!isEditing}
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        fontSize: '15px',
+                        border: 'none'
+                      }}
+                    />
+                    <Input
+                      placeholder="Education Description"
+                      value={education.description}
+                      onChange={value => handleFieldChange('educationsDescription', value)}
+                      disabled={!isEditing}
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        fontSize: '15px',
+                        border: 'none'
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </Panel>
           </div>
         </div>
