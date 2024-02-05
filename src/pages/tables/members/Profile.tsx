@@ -289,7 +289,7 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, employees }) => {
                       placeholder="Start Date"
                       value={work.start_date}
                       onChange={value => handleFieldChange('startDate', value)}
-                      disabled={!isEditingProp}
+                      disabled={!isEditing}
                       style={{
                         fontWeight: 'bold',
                         color: '#333',
@@ -300,34 +300,6 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, employees }) => {
                   </div>
                 ))}
               </div>
-              <Input
-                placeholder="Department"
-                value={editedFields.department}
-                onChange={value => handleFieldChange('department', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Work Description"
-                value={editedFields.workDescription}
-                onChange={value => handleFieldChange('workDescription', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Manager Name"
-                value={editedFields.managerName}
-                onChange={value => handleFieldChange('managerName', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Start Date"
-                value={editedFields.startDate}
-                onChange={value => handleFieldChange('startDate', value)}
-                disabled={!isEditingProp}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
             </Panel>
             <Panel
               header={
