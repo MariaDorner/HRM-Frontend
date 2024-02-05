@@ -21,7 +21,7 @@ const EmployeeDetailsPage: React.FC<EmployeeDetailsPageProps> = () => {
 
   return (
     <div>
-      <Profile employeeId={employeeId} isEditingProp={false} employees={data} />
+      <Profile employeeId={employeeId} employees={data} />
     </div>
   );
 };

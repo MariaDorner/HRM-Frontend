@@ -6,11 +6,10 @@ import PhoneIcon from '@rsuite/icons/Phone';
 
 interface ProfileProps {
   employeeId: any;
-  isEditingProp: boolean;
   employees: any[];
 }
 
-const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, employees }) => {
+const ProfileModal: React.FC<ProfileProps> = ({ employeeId, employees }) => {
   // Customize this modal based on the structure of your employee data
   const selectedEmployee = employees.find(employee => employee.id === employeeId);
   if (!selectedEmployee) {
@@ -240,7 +239,7 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
                 placeholder="Start Date"
                 value={editedFields.startDate}
                 onChange={value => handleFieldChange('startDate', value)}
-                disabled={!isEditingProp}
+                disabled={!isEditing}
                 style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
             </Panel>
@@ -256,7 +255,7 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, isEditingProp, emplo
                 placeholder="Skill Name"
                 value={editedFields.skillName}
                 onChange={value => handleFieldChange('skillName', value)}
-                disabled={!isEditingProp}
+                disabled={!isEditing}
                 style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
               />
               <Input

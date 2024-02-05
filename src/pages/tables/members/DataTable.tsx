@@ -48,7 +48,6 @@ const DataTable = () => {
 
   const handleNameClick = (rowData: any) => {
     setSelectedEmployeeId(rowData.id);
-
     navigate(`/employees/${rowData.id}`);
   };
 
