@@ -28,8 +28,8 @@ function previewFile(file, callback) {
 const DrawerView = (props: DrawerProps) => {
   const { onClose, ...rest } = props;
   const toaster = useToaster();
-  const [uploading, setUploading] = React.useState(false);
-  const [fileInfo, setFileInfo] = React.useState(null);
+
+  const [fileInfo, setFileInfo] = React.useState('');
   const [isHovered, setIsHovered] = useState(false);
 
   const [skills, setSkills] = useState<{ name: string; description: string }[]>([]);
@@ -55,7 +55,8 @@ const DrawerView = (props: DrawerProps) => {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [description, setDescription] = useState('');
-
+  const [imageId, setImageId] = useState('');
+  const formData = new FormData();
   const handleSubmit = async () => {
     const userData = {
       firstname: firstname,
@@ -67,12 +68,13 @@ const DrawerView = (props: DrawerProps) => {
       address: address,
       email: email,
       description: description,
-      profileImage: fileInfo || '',
+      profileImage: imageId,
       status: true,
       skills: skills.map((skill, index) => index + 1),
       work: works.map((work, index) => index + 1),
       education: educations.map((education, index) => index + 1)
     };
+
     try {
       // Make a POST request to your API endpoint
       const response = await fetch('http://localhost:3000/users', {
@@ -82,7 +84,7 @@ const DrawerView = (props: DrawerProps) => {
         },
         body: JSON.stringify(userData)
       });
-
+      console.log(userData);
       if (response.ok) {
         // Handle success
         toaster.push(<Message type="success">User created successfully</Message>);
@@ -96,6 +98,19 @@ const DrawerView = (props: DrawerProps) => {
       toaster.push(<Message type="error">An unexpected error occurred</Message>);
     }
   };
+
+  const handleFileChange = files => {
+    // Assuming only one file is allowed
+    const file = files[0];
+
+    // Append the file to the formData
+    formData.append('file', file.blobFile);
+
+    // You can also update the fileInfo state if needed
+    setFileInfo(file.name);
+    console.log(file.id);
+  };
+
   const handleInputChange = (index: number, field: string, value: string | boolean) => {
     // Create a copy of the current state
     const updatedWorks = [...works];
@@ -174,33 +189,35 @@ const DrawerView = (props: DrawerProps) => {
                 <Uploader
                   fileListVisible={false}
                   listType="picture"
-                  action="//jsonplaceholder.typicode.com/posts/"
-                  onUpload={(file, event) => {
-                    event.stopPropagation();
-                    setUploading(true);
+                  action="http://localhost:3000/files"
+                  onChange={handleFileChange}
+                  onSuccess={(response, file) => {
                     previewFile(file.blobFile, value => {
                       setFileInfo(value);
                     });
-                  }}
-                  onSuccess={(response, file) => {
-                    setUploading(false);
-                    toaster.push(<Message type="success">Uploaded successfully</Message>);
-                    console.log(response);
+                    // Handle successful file upload
+                    console.log('File uploaded successfully:', response?.data?.file?.id);
+                    setImageId(response?.data?.file?.id);
+                    // Append the file data to the formData here
+                    formData.append('file', file.blobFile);
+
+                    // Update the fileInfo state or handle the response data as needed
+                    setFileInfo(file.blobFile.name);
+                    console.log(formData);
                   }}
                   onError={() => {
                     setFileInfo(null);
-                    setUploading(false);
+
                     toaster.push(<Message type="error">Upload failed</Message>);
                   }}
                 >
-                  <button style={{ width: 150, height: 165 }}>
-                    {uploading && <Loader backdrop center />}
+                  <div style={{ width: 150, height: 150 }}>
                     {fileInfo ? (
                       <img src={fileInfo} width="100%" height="100%" />
                     ) : (
                       <AvatarIcon style={{ fontSize: 80 }} />
                     )}
-                  </button>
+                  </div>
                 </Uploader>
               </Form.Group>
               <Form.Group style={{ marginLeft: 20, marginRight: 0 }}>
