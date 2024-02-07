@@ -82,7 +82,7 @@ const DataTable = () => {
     <>
       <Stack className="table-toolbar" justifyContent="space-between">
         <Button appearance="primary" onClick={() => setShowDrawer(true)}>
-          Add Member
+          Add Employee
         </Button>
 
         <Stack spacing={6}>
