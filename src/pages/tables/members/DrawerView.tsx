@@ -56,6 +56,22 @@ const DrawerView = (props: DrawerProps) => {
     setWorks(updatedWorks);
   };
 
+  const handleInputChangeSkillEducation = (
+    index: number,
+    field: string,
+    value: string | boolean,
+    type: 'skills' | 'educations'
+  ) => {
+    if (type === 'skills') {
+      const updatedSkills = [...skills];
+      updatedSkills[index][field] = value as string;
+      setSkills(updatedSkills);
+    } else if (type === 'educations') {
+      const updatedEducations = [...educations];
+      updatedEducations[index][field] = value as string;
+      setEducations(updatedEducations);
+    }
+  };
   const handleAddWork = () => {
     // Add a new work entry to the works array with status as false and startDate as null
     setWorks([
@@ -286,11 +302,25 @@ const DrawerView = (props: DrawerProps) => {
               <h5 style={{ marginBottom: 20, textAlign: 'center' }}>- - Skill {index + 1} - - </h5>
               <Form.Group>
                 <Form.ControlLabel>Name</Form.ControlLabel>
-                <Form.Control name={`skillsname-${index}`} value={skill.name} />
+                <Form.Control
+                  name={`skillsname-${index}`}
+                  value={skill.name}
+                  onChange={value =>
+                    handleInputChangeSkillEducation(index, 'name', value, 'skills')
+                  }
+                />
               </Form.Group>
               <Form.Group>
                 <Form.ControlLabel>Description</Form.ControlLabel>
-                <Input as="textarea" rows={3} placeholder="description" value={skill.description} />
+                <Input
+                  as="textarea"
+                  rows={3}
+                  placeholder="description"
+                  value={skill.description}
+                  onChange={value =>
+                    handleInputChangeSkillEducation(index, 'description', value, 'skills')
+                  }
+                />
               </Form.Group>
               <MinusIcon
                 onClick={() => handleRemoveSkill(index)}
@@ -332,15 +362,33 @@ const DrawerView = (props: DrawerProps) => {
               </h5>
               <Form.Group>
                 <Form.ControlLabel>Name</Form.ControlLabel>
-                <Form.Control name={`educ-${index}`} value={education.name} />
+                <Form.Control
+                  name={`educ-${index}`}
+                  value={education.name}
+                  onChange={value =>
+                    handleInputChangeSkillEducation(index, 'name', value, 'educations')
+                  }
+                />
               </Form.Group>
               <Form.Group>
                 <Form.ControlLabel>Duration</Form.ControlLabel>
-                <Form.Control name={`dura-${index}`} value={education.duration} />
+                <Form.Control
+                  name={`dura-${index}`}
+                  value={education.duration}
+                  onChange={value =>
+                    handleInputChangeSkillEducation(index, 'duration', value, 'educations')
+                  }
+                />
               </Form.Group>
               <Form.Group>
                 <Form.ControlLabel>Description</Form.ControlLabel>
-                <Form.Control name={`desc-${index}`} value={education.description} />
+                <Form.Control
+                  name={`desc-${index}`}
+                  value={education.description}
+                  onChange={value =>
+                    handleInputChangeSkillEducation(index, 'description', value, 'educations')
+                  }
+                />
               </Form.Group>
               <MinusIcon
                 onClick={() => handleRemoveEducation(index)}
