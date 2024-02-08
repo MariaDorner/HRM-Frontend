@@ -9,6 +9,40 @@
   flex-direction: column;
   width: 40%;
 }
+.jt {
+  display: flex;
+  flex-direction: row;
+}
+.manag {
+  display: flex;
+  flex-direction: row;
+}
+.dt {
+  display: flex;
+  flex-direction: row;
+}
+.mangnam {
+  width: 200px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.slnm {
+  display: flex;
+  flex-direction: row;
+}
+.skdes {
+  display: flex;
+  flex-direction: row;
+}
+.strdat {
+  display: flex;
+  flex-direction: row;
+}
+.lsd {
+  width: 200px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
 
 .profile-avatar img {
   margin-top: 10px;

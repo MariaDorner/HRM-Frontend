@@ -215,57 +215,94 @@ const ProfileModal: React.FC<ProfileProps> = ({ employeeId, employees }) => {
 
           <div className="profile-details">
             <Panel header={<span>Work</span>} bordered>
-              <Input
-                placeholder="Job Title"
-                value={editedFields.jobTitle}
-                onChange={value => handleFieldChange('jobTitle', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Department"
-                value={editedFields.department}
-                onChange={value => handleFieldChange('department', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Work Description"
-                value={editedFields.workDescription}
-                onChange={value => handleFieldChange('workDescription', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Manager Name"
-                value={editedFields.managerName}
-                onChange={value => handleFieldChange('managerName', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Start Date"
-                value={editedFields.startDate}
-                onChange={value => handleFieldChange('startDate', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
+              <div className="jt">
+                <label htmlFor="Job Title" className="lsd">
+                  Job Title
+                </label>
+                <Input
+                  placeholder="Job Title"
+                  value={editedFields.jobTitle}
+                  onChange={value => handleFieldChange('jobTitle', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
+                />
+              </div>
+              <div className="dt">
+                <label htmlFor="Department" className="lsd">
+                  Department
+                </label>
+                <Input
+                  placeholder="Department"
+                  value={editedFields.department}
+                  onChange={value => handleFieldChange('department', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
+                />
+              </div>
+              <div className="dt">
+                <label htmlFor="Department" className="lsd">
+                  Work Description
+                </label>
+                <Input
+                  placeholder="Work Description"
+                  value={editedFields.workDescription}
+                  onChange={value => handleFieldChange('workDescription', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
+                />
+              </div>
+              <div className="manag">
+                <label htmlFor="Manager Name" className="mangnam">
+                  Manager Name
+                </label>
+
+                <Input
+                  placeholder="Manager Name"
+                  value={editedFields.managerName}
+                  onChange={value => handleFieldChange('managerName', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
+                />
+              </div>
+              <div className="strdat">
+                <label htmlFor="Start Date" className="lsd">
+                  Start Date
+                </label>
+
+                <Input
+                  placeholder="Start Date"
+                  value={editedFields.startDate}
+                  onChange={value => handleFieldChange('startDate', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
+                />
+              </div>
             </Panel>
             <Panel header={<span>Skills</span>} bordered>
-              <Input
-                placeholder="Skill Name"
-                value={editedFields.skillName}
-                onChange={value => handleFieldChange('skillName', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
-              <Input
-                placeholder="Skill Description"
-                value={editedFields.skillDescription}
-                onChange={value => handleFieldChange('skillDescription', value)}
-                disabled={!isEditing}
-                style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
-              />
+              <div className="slnm">
+                <label htmlFor="Skill Name" className="lsd">
+                  Skill Name
+                </label>
+                <Input
+                  placeholder="Skill Name"
+                  value={editedFields.skillName}
+                  onChange={value => handleFieldChange('skillName', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
+                />
+              </div>
+              <div className="skdes">
+                <label htmlFor="Skill Description" className="lsd">
+                  Skill Description
+                </label>
+                <Input
+                  placeholder="Skill Description"
+                  value={editedFields.skillDescription}
+                  onChange={value => handleFieldChange('skillDescription', value)}
+                  disabled={!isEditing}
+                  style={{ fontWeight: 'bold', color: '#333', fontSize: '15px', border: 'none' }}
+                />
+              </div>
             </Panel>
             <Panel header={<span>Education</span>} bordered>
               <Input
